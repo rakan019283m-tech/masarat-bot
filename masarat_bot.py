@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 بوت مسارات الثلاث (صحي / هندسي / حاسوبي)
-لكل مسار → مواد → مدرسين (كل مدرس زر مستقل)
+مع الروابط والمعرفات المباشرة للقنوات والأسعار
 """
 
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
@@ -10,7 +10,7 @@ from telegram.ext import Application, CommandHandler, CallbackQueryHandler, Cont
 # ============ التوكن ============
 TOKEN = "8880859850:AAF8h52qAVKv-tFL5EeeT-SR5bVFcEvm0TM"
 
-# ============ قاعدة بيانات المدرسين ============
+# ============ قاعدة بيانات المدرسين والقنوات ============
 DATA = {
     "sehi": {
         "title": "🩺 المسار الصحي",
@@ -18,51 +18,42 @@ DATA = {
             "comp": {
                 "title": "🖥️ الحاسب",
                 "tutors": [
-                    {"name": "محمد الجنيدي", "contact": "@EngMsaD11", "price": "300 ريال"},
-                    {"name": "مسعد احمد", "contact": "@Mosaad4567", "price": "300 ريال"},
-                    {"name": "رهيب محمد", "contact": "@Diamond246", "price": "299 ريال"},
-                    {"name": "رنا", "contact": "@Ra12na_IT", "price": "حاسب 250 / برمجة 350"},
+                    {"name": "محمد الجنيدي", "contact": "https://t.me/njph80ysical", "price": "300 ريال"},
+                    {"name": "مسعد احمد", "contact": "https://t.me/computersciencewithmosaad", "price": "300 ريال"},
+                    {"name": "رنا", "contact": "https://t.me/RanaprogrammingNU", "price": "حاسب 250 / برمجة 350"},
                 ]
             },
             "elmi1": {
                 "title": "🧪 علمي (1)",
                 "tutors": [
-                    {"name": "ريماز", "contact": "@rouzabadr", "price": "400 ريال"},
-                    {"name": "د. ريم", "contact": "0556074565 (واتساب)", "price": "300 ريال"},
-                    {"name": "محمد الجنيدي", "contact": "@EngMsaD11", "price": "300 ريال"},
-                    {"name": "يارا الماوردي", "contact": "@DrYaraMawardy", "price": "350 ريال"},
-                    {"name": "احمد مكاوي", "contact": "0501381714 (واتساب)", "price": "عن بعد 500 / حضوري 800"},
-                    {"name": "مصطفى محمود", "contact": "@EngUncle_lolm", "price": "150 ريال"},
-                    {"name": "علي محمد", "contact": "@Alymohamed97", "price": "300 ريال"},
-                    {"name": "ابو غيم", "contact": "@ABO_GHAYM_12", "price": "250 ريال"},
-                    {"name": "احمد الصمادي", "contact": "@T_AlSmadi", "price": "عن بعد 400 / حضوري 800"},
-                    {"name": "صادق مقداد", "contact": "0542624649 (واتساب)", "price": "200 ريال"},
+                    {"name": "محمد الجنيدي", "contact": "https://t.me/njph80ysical", "price": "300 ريال"},
+                    {"name": "يارا الماوردي", "contact": "https://t.me/nagraantagreeby", "price": "350 ريال"},
+                    {"name": "احمد مكاوي", "contact": "https://t.me/ahmed11_nu", "price": "عن بعد 500 / حضوري 800"},
+                    {"name": "مصطفى", "contact": "https://t.me/gmustafamahmoud", "price": "150 ريال"},
+                    {"name": "علي محمد", "contact": "https://t.me/najran_math1", "price": "300 ريال"},
+                    {"name": "الصمادي", "contact": "https://t.me/alsmadi2024", "price": "عن بعد 400 / حضوري 800"},
                 ]
             },
             "elmi2": {
                 "title": "🧬 علمي (2)",
                 "tutors": [
-                    {"name": "محمد عبدالشكور", "contact": "@Masteriron", "price": "200 ريال"},
-                    {"name": "أريام محمد", "contact": "@RyamAmm", "price": "350 ريال"},
-                    {"name": "يوسف محمد", "contact": "0593812861 (واتساب)", "price": "250 ريال"},
-                    {"name": "نجوى احمد", "contact": "0551760599 (واتساب)", "price": "500 ريال"},
-                    {"name": "إبراهيم حمدان", "contact": "@Dr_ibrahimhh", "price": "300 ريال"},
-                    {"name": "أشرف رضوان", "contact": "0531461336 (واتساب)", "price": "300 ريال"},
-                    {"name": "عبداللطيف جميل", "contact": "@Abdullatif1128", "price": "400 ريال"},
-                    {"name": "محمد الجنيدي", "contact": "@EngMsaD11", "price": "300 ريال"},
-                    {"name": "د. هدى", "contact": "0568816391 (واتساب)", "price": "400 ريال"},
-                    {"name": "ام ميار", "contact": "0538135853 (واتساب)", "price": "400 ريال"},
+                    {"name": "أريام محمد", "contact": "https://t.me/collegeless", "price": "350 ريال"},
+                    {"name": "يوسف محمد", "contact": "https://t.me/Preparatory_withYusuf", "price": "250 ريال"},
+                    {"name": "اشرف رضوان", "contact": "https://t.me/DrAshraf20", "price": "300 ريال"},
+                    {"name": "عبداللطيف", "contact": "https://t.me/abdullatifgameel999", "price": "400 ريال"},
+                    {"name": "محمد الجنيدي", "contact": "https://t.me/njph80ysical", "price": "300 ريال"},
+                    {"name": "ام ميار", "contact": "https://t.me/Najranshrohatammyar", "price": "400 ريال"},
                 ]
             },
             "english": {
                 "title": "🗣️ اللغة الإنجليزية",
                 "tutors": [
-                    {"name": "يوسف", "contact": "0540972198 (واتساب)", "price": "300 ريال"},
-                    {"name": "اسماعيل", "contact": "@Abduali44", "price": "400 ريال"},
-                    {"name": "يارا الماوردي", "contact": "@DrYaraMawardy", "price": "350 ريال"},
-                    {"name": "وليد", "contact": "@Waleedj8", "price": "400 ريال (عن بعد وحضوري)"},
-                    {"name": "محمود مرتضى", "contact": "0553408926 (واتساب)", "price": "400 ريال"},
-                    {"name": "ام مريم", "contact": "0596502573 (واتساب)", "price": "500 ريال"},
+                    {"name": "يوسف", "contact": "https://t.me/EnglishYusuf", "price": "300 ريال"},
+                    {"name": "اسماعيل", "contact": "https://t.me/Abduali445", "price": "400 ريال"},
+                    {"name": "يارا الماوردي", "contact": "https://t.me/nagraantagreeby", "price": "350 ريال"},
+                    {"name": "وليد", "contact": "https://t.me/Waleed_forEn", "price": "400 ريال (عن بعد وحضوري)"},
+                    {"name": "محمود", "contact": "https://t.me/EnglishwithDrMahmoud", "price": "400 ريال"},
+                    {"name": "ام مريم", "contact": "https://t.me/M_J_A_k", "price": "500 ريال"},
                 ]
             },
         }
@@ -73,51 +64,45 @@ DATA = {
             "physics": {
                 "title": "🔬 فيزياء",
                 "tutors": [
-                    {"name": "مازن", "contact": "@imezoi", "price": "250 ريال"},
-                    {"name": "أريام محمد", "contact": "@RyamAmm", "price": "350 ريال"},
-                    {"name": "يوسف محمد", "contact": "0593812861 (واتساب)", "price": "250 ريال"},
-                    {"name": "ام ميار", "contact": "0538135853 (واتساب)", "price": "400 ريال"},
-                    {"name": "أشرف رضوان", "contact": "0531461336 (واتساب)", "price": "300 ريال"},
-                    {"name": "عبداللطيف جميل", "contact": "@Abdullatif1128", "price": "400 ريال"},
-                    {"name": "مصطفى محمود", "contact": "@EngUncle_lolm", "price": "150 ريال"},
-                    {"name": "محمد الجنيدي", "contact": "@EngMsaD11", "price": "300 ريال"},
-                    {"name": "احمد الصمادي", "contact": "@T_AlSmadi", "price": "عن بعد 400 / حضوري 800"},
-                    {"name": "احمد مكاوي", "contact": "0501381714 (واتساب)", "price": "عن بعد 500 / حضوري 800"},
+                    {"name": "أريام محمد", "contact": "https://t.me/collegeless", "price": "350 ريال"},
+                    {"name": "يوسف محمد", "contact": "https://t.me/Preparatory_withYusuf", "price": "250 ريال"},
+                    {"name": "ام ميار", "contact": "https://t.me/Najranshrohatammyar", "price": "400 ريال"},
+                    {"name": "اشرف رضوان", "contact": "https://t.me/DrAshraf20", "price": "300 ريال"},
+                    {"name": "عبداللطيف", "contact": "https://t.me/abdullatifgameel999", "price": "400 ريال"},
+                    {"name": "مصطفى", "contact": "https://t.me/gmustafamahmoud", "price": "150 ريال"},
+                    {"name": "محمد الجنيدي", "contact": "https://t.me/njph80ysical", "price": "300 ريال"},
+                    {"name": "الصمادي", "contact": "https://t.me/alsmadi2024", "price": "عن بعد 400 / حضوري 800"},
+                    {"name": "احمد مكاوي", "contact": "https://t.me/ahmed11_nu", "price": "عن بعد 500 / حضوري 800"},
                 ]
             },
             "prog": {
                 "title": "🖥️ حاسب وبرمجة",
                 "tutors": [
-                    {"name": "محمد الجنيدي", "contact": "@EngMsaD11", "price": "300 ريال"},
-                    {"name": "مسعد احمد", "contact": "@Mosaad4567", "price": "300 ريال"},
-                    {"name": "رهيب محمد", "contact": "@Diamond246", "price": "299 ريال"},
-                    {"name": "رنا", "contact": "@Ra12na_IT", "price": "حاسب 250 / برمجة 350"},
+                    {"name": "محمد الجنيدي", "contact": "https://t.me/njph80ysical", "price": "300 ريال"},
+                    {"name": "مسعد احمد", "contact": "https://t.me/computersciencewithmosaad", "price": "300 ريال"},
+                    {"name": "رنا", "contact": "https://t.me/RanaprogrammingNU", "price": "حاسب 250 / برمجة 350"},
                 ]
             },
             "math": {
                 "title": "📐 رياضيات",
                 "tutors": [
-                    {"name": "أريام محمد", "contact": "@RyamAmm", "price": "350 ريال"},
-                    {"name": "حسين فلكه", "contact": "@hhhhxzm", "price": "عن بعد 400 / حضوري 800"},
-                    {"name": "ريان", "contact": "@Rayanacad", "price": "350 ريال"},
-                    {"name": "مازن", "contact": "@imezoi", "price": "250 ريال"},
-                    {"name": "علي محمد", "contact": "@Alymohamed97", "price": "300 ريال"},
-                    {"name": "أشرف رضوان", "contact": "0531461336 (واتساب)", "price": "300 ريال"},
-                    {"name": "يوسف محمد", "contact": "0593812861 (واتساب)", "price": "300-350 ريال"},
-                    {"name": "عبدالله اللباد", "contact": "@a5kur", "price": "250 ريال"},
-                    {"name": "أبو ياسر", "contact": "@Aboyasser221", "price": "عن بعد 400 / حضوري 600"},
-                    {"name": "محمد الجنيدي", "contact": "@EngMsaD11", "price": "300 ريال"},
+                    {"name": "أريام محمد", "contact": "https://t.me/collegeless", "price": "350 ريال"},
+                    {"name": "علي محمد", "contact": "https://t.me/najran_math1", "price": "300 ريال"},
+                    {"name": "اشرف رضوان", "contact": "https://t.me/DrAshraf20", "price": "300 ريال"},
+                    {"name": "يوسف محمد", "contact": "https://t.me/Preparatory_withYusuf", "price": "300-350 ريال"},
+                    {"name": "عبدالله اللباد", "contact": "https://t.me/ABDULLAHclass", "price": "250 ريال"},
+                    {"name": "محمد الجنيدي", "contact": "https://t.me/njph80ysical", "price": "300 ريال"},
                 ]
             },
             "english": {
                 "title": "🗣️ اللغة الإنجليزية",
                 "tutors": [
-                    {"name": "يوسف", "contact": "0540972198 (واتساب)", "price": "300 ريال"},
-                    {"name": "اسماعيل", "contact": "@Abduali44", "price": "400 ريال"},
-                    {"name": "يارا الماوردي", "contact": "@DrYaraMawardy", "price": "350 ريال"},
-                    {"name": "وليد", "contact": "@Waleedj8", "price": "400 ريال (عن بعد وحضوري)"},
-                    {"name": "محمود مرتضى", "contact": "0553408926 (واتساب)", "price": "400 ريال"},
-                    {"name": "ام مريم", "contact": "0596502573 (واتساب)", "price": "500 ريال"},
+                    {"name": "يوسف", "contact": "https://t.me/EnglishYusuf", "price": "300 ريال"},
+                    {"name": "اسماعيل", "contact": "https://t.me/Abduali445", "price": "400 ريال"},
+                    {"name": "يارا الماوردي", "contact": "https://t.me/nagraantagreeby", "price": "350 ريال"},
+                    {"name": "وليد", "contact": "https://t.me/Waleed_forEn", "price": "400 ريال (عن بعد وحضوري)"},
+                    {"name": "محمود", "contact": "https://t.me/EnglishwithDrMahmoud", "price": "400 ريال"},
+                    {"name": "ام مريم", "contact": "https://t.me/M_J_A_k", "price": "500 ريال"},
                 ]
             },
         }
@@ -128,49 +113,43 @@ DATA = {
             "prog": {
                 "title": "🖥️ حاسب وبرمجة",
                 "tutors": [
-                    {"name": "محمد الجنيدي", "contact": "@EngMsaD11", "price": "300 ريال"},
-                    {"name": "مسعد احمد", "contact": "@Mosaad4567", "price": "300 ريال"},
-                    {"name": "رهيب محمد", "contact": "@Diamond246", "price": "299 ريال"},
-                    {"name": "رنا", "contact": "@Ra12na_IT", "price": "حاسب 250 / برمجة 350"},
+                    {"name": "محمد الجنيدي", "contact": "https://t.me/njph80ysical", "price": "300 ريال"},
+                    {"name": "مسعد احمد", "contact": "https://t.me/computersciencewithmosaad", "price": "300 ريال"},
+                    {"name": "رنا", "contact": "https://t.me/RanaprogrammingNU", "price": "حاسب 250 / برمجة 350"},
                 ]
             },
             "math": {
                 "title": "📐 رياضيات",
                 "tutors": [
-                    {"name": "أريام محمد", "contact": "@RyamAmm", "price": "350 ريال"},
-                    {"name": "حسين فلكه", "contact": "@hhhhxzm", "price": "عن بعد 400 / حضوري 800"},
-                    {"name": "ريان", "contact": "@Rayanacad", "price": "350 ريال"},
-                    {"name": "مازن", "contact": "@imezoi", "price": "250 ريال"},
-                    {"name": "علي محمد", "contact": "@Alymohamed97", "price": "300 ريال"},
-                    {"name": "أشرف رضوان", "contact": "0531461336 (واتساب)", "price": "300 ريال"},
-                    {"name": "يوسف محمد", "contact": "0593812861 (واتساب)", "price": "300-350 ريال"},
-                    {"name": "عبدالله اللباد", "contact": "@a5kur", "price": "250 ريال"},
-                    {"name": "أبو ياسر", "contact": "@Aboyasser221", "price": "عن بعد 400 / حضوري 600"},
+                    {"name": "أريام محمد", "contact": "https://t.me/collegeless", "price": "350 ريال"},
+                    {"name": "علي محمد", "contact": "https://t.me/najran_math1", "price": "300 ريال"},
+                    {"name": "اشرف رضوان", "contact": "https://t.me/DrAshraf20", "price": "300 ريال"},
+                    {"name": "يوسف محمد", "contact": "https://t.me/Preparatory_withYusuf", "price": "300-350 ريال"},
+                    {"name": "عبدالله اللباد", "contact": "https://t.me/ABDULLAHclass", "price": "250 ريال"},
                 ]
             },
             "physics": {
                 "title": "🔬 فيزياء",
                 "tutors": [
-                    {"name": "مازن", "contact": "@imezoi", "price": "250 ريال"},
-                    {"name": "أريام محمد", "contact": "@RyamAmm", "price": "350 ريال"},
-                    {"name": "يوسف محمد", "contact": "0593812861 (واتساب)", "price": "250 ريال"},
-                    {"name": "ام ميار", "contact": "0538135853 (واتساب)", "price": "400 ريال"},
-                    {"name": "أشرف رضوان", "contact": "0531461336 (واتساب)", "price": "300 ريال"},
-                    {"name": "عبداللطيف جميل", "contact": "@Abdullatif1128", "price": "400 ريال"},
-                    {"name": "مصطفى محمود", "contact": "@EngUncle_lolm", "price": "150 ريال"},
-                    {"name": "احمد الصمادي", "contact": "@T_AlSmadi", "price": "عن بعد 400 / حضوري 800"},
-                    {"name": "احمد مكاوي", "contact": "0501381714 (واتساب)", "price": "عن بعد 500 / حضوري 800"},
+                    {"name": "أريام محمد", "contact": "https://t.me/collegeless", "price": "350 ريال"},
+                    {"name": "يوسف محمد", "contact": "https://t.me/Preparatory_withYusuf", "price": "250 ريال"},
+                    {"name": "ام ميار", "contact": "https://t.me/Najranshrohatammyar", "price": "400 ريال"},
+                    {"name": "اشرف رضوان", "contact": "https://t.me/DrAshraf20", "price": "300 ريال"},
+                    {"name": "عبداللطيف", "contact": "https://t.me/abdullatifgameel999", "price": "400 ريال"},
+                    {"name": "مصطفى", "contact": "https://t.me/gmustafamahmoud", "price": "150 ريال"},
+                    {"name": "الصمادي", "contact": "https://t.me/alsmadi2024", "price": "عن بعد 400 / حضوري 800"},
+                    {"name": "احمد مكاوي", "contact": "https://t.me/ahmed11_nu", "price": "عن بعد 500 / حضوري 800"},
                 ]
             },
             "english": {
                 "title": "🗣️ اللغة الإنجليزية",
                 "tutors": [
-                    {"name": "يوسف", "contact": "0540972198 (واتساب)", "price": "300 ريال"},
-                    {"name": "اسماعيل", "contact": "@Abduali44", "price": "400 ريال"},
-                    {"name": "يارا الماوردي", "contact": "@DrYaraMawardy", "price": "350 ريال"},
-                    {"name": "وليد", "contact": "@Waleedj8", "price": "400 ريال (عن بعد وحضوري)"},
-                    {"name": "محمود مرتضى", "contact": "0553408926 (واتساب)", "price": "400 ريال"},
-                    {"name": "ام مريم", "contact": "0596502573 (واتساب)", "price": "500 ريال"},
+                    {"name": "يوسف", "contact": "https://t.me/EnglishYusuf", "price": "300 ريال"},
+                    {"name": "اسماعيل", "contact": "https://t.me/Abduali445", "price": "400 ريال"},
+                    {"name": "يارا الماوردي", "contact": "https://t.me/nagraantagreeby", "price": "350 ريال"},
+                    {"name": "وليد", "contact": "https://t.me/Waleed_forEn", "price": "400 ريال (عن بعد وحضوري)"},
+                    {"name": "محمود", "contact": "https://t.me/EnglishwithDrMahmoud", "price": "400 ريال"},
+                    {"name": "ام مريم", "contact": "https://t.me/M_J_A_k", "price": "500 ريال"},
                 ]
             },
         }
@@ -200,20 +179,29 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     parts = data.split("|")
     action = parts[0]
 
-    if action == "path":
+    if action == "main_menu":
+        keyboard = [
+            [InlineKeyboardButton(DATA["sehi"]["title"], callback_data="path|sehi")],
+            [InlineKeyboardButton(DATA["handasi"]["title"], callback_data="path|handasi")],
+            [InlineKeyboardButton(DATA["hasoobi"]["title"], callback_data="path|hasoobi")],
+        ]
+        await query.message.edit_text(
+            "أهلاً بك 👋\nاختر مسارك عشان تشوف مدرسينه:",
+            reply_markup=InlineKeyboardMarkup(keyboard)
+        )
+
+    elif action == "path":
         path_key = parts[1]
         path = DATA[path_key]
         subjects = path["subjects"]
 
-        if not subjects:
-            await query.message.reply_text(f"{path['title']}\n\nما فيه مواد مضافة بعد 🙏")
-            return
-
         keyboard = []
         for subj_key, subj in subjects.items():
             keyboard.append([InlineKeyboardButton(subj["title"], callback_data=f"subj|{path_key}|{subj_key}")])
+        
+        keyboard.append([InlineKeyboardButton("🔙 رجوع للمسارات", callback_data="main_menu")])
 
-        await query.message.reply_text(
+        await query.message.edit_text(
             f"{path['title']}\n\nاختر المادة:",
             reply_markup=InlineKeyboardMarkup(keyboard)
         )
@@ -226,8 +214,10 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         keyboard = []
         for i, tutor in enumerate(tutors):
             keyboard.append([InlineKeyboardButton(tutor["name"], callback_data=f"tutor|{path_key}|{subj_key}|{i}")])
+        
+        keyboard.append([InlineKeyboardButton("🔙 رجوع للمواد", callback_data=f"path|{path_key}")])
 
-        await query.message.reply_text(
+        await query.message.edit_text(
             f"{subject['title']}\n\nاختر المدرس:",
             reply_markup=InlineKeyboardMarkup(keyboard)
         )
@@ -237,11 +227,14 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         tutor = DATA[path_key]["subjects"][subj_key]["tutors"][idx]
 
         text = (
-            f"👤 {tutor['name']}\n"
-            f"📨 {tutor['contact']}\n"
-            f"💰 {tutor['price']}"
+            f"👤 **{tutor['name']}**\n"
+            f"🔗 [رابط القناة]({tutor['contact']})\n"
+            f"💰 **{tutor['price']}**"
         )
-        await query.message.reply_text(text)
+        
+        keyboard = [[InlineKeyboardButton("🔙 رجوع للمدرسين", callback_data=f"subj|{path_key}|{subj_key}")]]
+        
+        await query.message.edit_text(text, parse_mode="Markdown", reply_markup=InlineKeyboardMarkup(keyboard))
 
 
 def main():
