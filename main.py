@@ -19,8 +19,7 @@ def main_menu_keyboard():
         [InlineKeyboardButton("📋 شروط القبول", callback_data="admission_guide"),
          InlineKeyboardButton("📞 أرقام التواصل والمسؤولين", url="https://t.me/Najran1_NU/1553665")],
         [InlineKeyboardButton("🔗 روابط مهمة", callback_data="important_links"),
-         InlineKeyboardButton("📢 قناة جامعة نجران", url="https://t.me/Najran_channel"),
-         InlineKeyboardButton("📢 القناة الرسمية", url="https://t.me/NAJRAN1_NU")]
+         InlineKeyboardButton("📢 قناة جامعة نجران", url="https://t.me/Najran_channel")]
     ]
     return InlineKeyboardMarkup(keyboard)
 
@@ -41,6 +40,8 @@ def colleges_menu_keyboard():
          InlineKeyboardButton("👥 الموارد البشرية", url="https://t.me/Najran_HR")],
         [InlineKeyboardButton("📖 الجامعة الإلكترونية", url="https://t.me/Saudi_EUnu"),
          InlineKeyboardButton("🎓 الدراسات العليا", url="https://t.me/DpgsNU")],
+        [InlineKeyboardButton("🏆 قناة الشهادات الإحترافية", url="https://t.me/NUprofcert_channel"),
+         InlineKeyboardButton("👥 قروب الشهادات الإحترافية", url="https://t.me/NUprofcert")],
         [InlineKeyboardButton("📚 تبادل كتب", url="https://t.me/book_exchangeNU"),
          InlineKeyboardButton("🎯 مبادرات ودورات جامعة نجران", url="https://t.me/NajranUniEvents")],
         [InlineKeyboardButton("📢 قنوات الجامعة", url="https://t.me/Najran1_NU/1524031")],
@@ -161,8 +162,6 @@ def important_links_keyboard():
         [InlineKeyboardButton("🎓 البلاك بورد", url="https://lms.nu.edu.sa/")],
         [InlineKeyboardButton("🌐 البوابة الإلكترونية", url="https://edugate.nu.edu.sa/nu/init")],
         [InlineKeyboardButton("✉️ الإيميل الجامعي", callback_data="university_email")],
-        [InlineKeyboardButton("🏆 قناة الشهادات الإحترافية جامعة نجران", url="https://t.me/NUprofcert_channel")],
-        [InlineKeyboardButton("👥 قروب الشهادات الإحترافية جامعة نجران", url="https://t.me/NUprofcert")],
         [InlineKeyboardButton("⬅️ القائمة الرئيسية", callback_data="main_menu")]
     ]
     return InlineKeyboardMarkup(keyboard)
