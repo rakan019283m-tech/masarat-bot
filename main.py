@@ -134,7 +134,7 @@ def academic_menu_keyboard():
          InlineKeyboardButton("🚶‍♂️ الطلبة الزائرون", callback_data="visitor")],
         [InlineKeyboardButton("⚖️ الفرق بين التأجيل والاعتذار", callback_data="diff")],
         [InlineKeyboardButton("🔄 نظام وتحويل الكليات", url="https://t.me/Najran1_NU/1553671")],
-        [InlineKeyboardButton("📊 التقديرات", url="https://t.me/Najran1_NU/1502748"),
+        [InlineKeyboardButton("📊 التقديرات", url="https://t.me/Najran1_NU/1553731"),
          InlineKeyboardButton("⚠️ انقطاع المكافأة", callback_data="reward_stop")],
         [InlineKeyboardButton("⬅️ القائمة الرئيسية", callback_data="main_menu")]
     ]
@@ -144,6 +144,7 @@ def important_links_keyboard():
     keyboard = [
         [InlineKeyboardButton("🎓 البلاك بورد", url="https://lms.nu.edu.sa/")],
         [InlineKeyboardButton("🌐 البوابة الإلكترونية", url="https://edugate.nu.edu.sa/nu/init")],
+        [InlineKeyboardButton("✉️ الإيميل الجامعي", callback_data="university_email")],
         [InlineKeyboardButton("⬅️ القائمة الرئيسية", callback_data="main_menu")]
     ]
     return InlineKeyboardMarkup(keyboard)
@@ -218,13 +219,12 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await query.edit_message_text(text, reply_markup=housing_menu_keyboard(), parse_mode="Markdown")
     elif data == "housing_conditions":
         text = (
-            "📜 **شروط السكن الجامعي:**\n\n"
-            "1️⃣ أن تكون المسافة بين مقر إقامة الطالب / الطالبة ومقر الإسكان الطلابي (80) كيلومترا فأكثر.\n\n"
-            "2️⃣ أن تكون المسافة بين مقر الثانوية العامة التي درس فيها الطالب / الطالبة ومقر الإسكان الطلابي (80) كيلومترا فأكثر.\n\n"
-            "3️⃣ إحضار صورة واضحة من شهادة الثانوية العامة للتحقق من مقر الجهة التعليمية المانحة للشهادة ومدى استيفاء شرط المسافة المعتمد.\n\n"
-            "4️⃣ في حالة ثبوت عدم استيفاء شرط المسافة، يُستبعد طلب الطالب / الطالبة من إجراءات الفرز والمفاضلة على السكن الطلابي، مع اتخاذ ما يلزم وفق الأنظمة واللوائح المعتمدة."
+            "أن تكون المسافة بين مقر إقامة الطالب / الطالبة ومقر الإسكان الطلابي (80) كيلومترا فأكثر.\n\n"
+            "أن تكون المسافة بين مقر الثانوية العامة التي درس فيها الطالب / الطالبة ومقر الإسكان الطلابي (80) كيلومترا فأكثر.\n\n"
+            "احضار صورة واضحة من شهادة الثانوية العامة للتحقق من مقر الجهة التعليمية المانحة للشهادة ومدى استيفاء شرط المسافة المعتمد.\n\n"
+            "في حالة ثبوت عدم استيفاء شرط المسافة، يُستبعد طلب الطالب / الطالبة من إجراءات الفرز والمفاضلة على السكن الطلابي، مع اتخاذ ما يلزم وفق الأنظمة واللوائح المعتمدة."
         )
-        await query.edit_message_text(text, reply_markup=housing_menu_keyboard(), parse_Mode="Markdown")
+        await query.edit_message_text(text, reply_markup=housing_menu_keyboard())
 
     # الحركات الأكاديمية
     elif data == "academic_menu":
@@ -292,6 +292,22 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # روابط مهمة
     elif data == "important_links":
         await query.edit_message_text("🔗 الروابط المهمة والأنظمة الإلكترونية:", reply_markup=important_links_keyboard())
+    elif data == "university_email":
+        text = (
+            "👥جميع طلاب وطالبات جامعة نجران لديهم إيميل جامعي بصيغة:\n"
+            "الرقم الجامعي @nu.edu.sa\n"
+            "مثال:\n"
+            "123456789@nu.edu.sa\n\n"
+            "🔒كلمة المرور:\n"
+            "هي نفسها كلمة مرور الدخول على البوابة الإلكترونية.\n\n"
+            "✅ طريقة التفعيل:\n"
+            "عند الضغط على إضافة حساب وإكمال البيانات المطلوبة، يتم تفعيل الإيميل مباشرة.\n\n"
+            "👤 الدخول على الإيميل:\n"
+            "عن طريق موقع Outlook ✉️\n\n"
+            "📋 ملاحظة:\n"
+            "تفعيل الإيميل الجامعي ضروري لاستقبال وإرسال الرسائل مع دكاترة المقررات والإدارة. ㅤ ㅤ؜"
+        )
+        await query.edit_message_text(text, reply_markup=important_links_keyboard())
 
     # شروط القبول العامة
     elif data == "admission_guide":
