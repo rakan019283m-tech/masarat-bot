@@ -19,6 +19,7 @@ def main_menu_keyboard():
         [InlineKeyboardButton("📋 شروط القبول", callback_data="admission_guide"),
          InlineKeyboardButton("📞 أرقام التواصل والمسؤولين", url="https://t.me/Najran1_NU/1553665")],
         [InlineKeyboardButton("🔗 روابط مهمة", callback_data="important_links"),
+         InlineKeyboardButton("📢 قناة جامعة نجران", url="https://t.me/Najran_channel"),
          InlineKeyboardButton("📢 القناة الرسمية", url="https://t.me/NAJRAN1_NU")]
     ]
     return InlineKeyboardMarkup(keyboard)
@@ -33,13 +34,15 @@ def colleges_menu_keyboard():
          InlineKeyboardButton("⚖️ الشريعة", callback_data="sharia_college")],
         [InlineKeyboardButton("📊 الكلية التطبيقية (دبلومات)", callback_data="applied_college"),
          InlineKeyboardButton("💼 إدارة الأعمال والأنظمة", callback_data="business_college")],
+        [InlineKeyboardButton("🏛️ كليه اداره الأعمال", callback_data="admsci_college")],
         [InlineKeyboardButton("📖 كلية التربية", url="https://t.me/education_NU"),
          InlineKeyboardButton("🗣️ اللغات والترجمة", url="https://t.me/Najran_Translation")],
         [InlineKeyboardButton("🧪 العلوم والآداب", url="https://t.me/Arts_sciencesNU"),
          InlineKeyboardButton("👥 الموارد البشرية", url="https://t.me/Najran_HR")],
         [InlineKeyboardButton("📖 الجامعة الإلكترونية", url="https://t.me/Saudi_EUnu"),
          InlineKeyboardButton("🎓 الدراسات العليا", url="https://t.me/DpgsNU")],
-        [InlineKeyboardButton("📚 تبادل كتب", url="https://t.me/book_exchangeNU")],
+        [InlineKeyboardButton("📚 تبادل كتب", url="https://t.me/book_exchangeNU"),
+         InlineKeyboardButton("🎯 مبادرات ودورات جامعة نجران", url="https://t.me/NajranUniEvents")],
         [InlineKeyboardButton("📢 قنوات الجامعة", url="https://t.me/Najran1_NU/1524031")],
         [InlineKeyboardButton("⬅️ القائمة الرئيسية", callback_data="main_menu")]
     ]
@@ -69,6 +72,7 @@ def eng_keyboard():
         [InlineKeyboardButton("الهندسة الكيميائيه", url="https://t.me/Eng_Najran/4603")],
         [InlineKeyboardButton("هندسة الميكاترونيكس", url="https://t.me/Eng_Najran/56657")],
         [InlineKeyboardButton("مساري الهندسي", url="https://t.me/EngineeringPathNu")],
+        [InlineKeyboardButton("قروب كليه الهندسه", url="https://t.me/NajranEng")],
         [InlineKeyboardButton("⬅️ رجوع للكليات", callback_data="colleges_menu")]
     ]
     return InlineKeyboardMarkup(keyboard)
@@ -90,12 +94,16 @@ def sharia_keyboard():
 
 def applied_keyboard():
     keyboard = [
+        [InlineKeyboardButton("قروب كليه التطبيقيه", url="https://t.me/AppliedNU")],
         [InlineKeyboardButton("محاسبة دبلوم", url="https://t.me/appliedaccountingNu")],
         [InlineKeyboardButton("ادارة اعمال دبلوم", url="https://t.me/NUBAdiploma")],
         [InlineKeyboardButton("دعم فني دبلوم", url="https://t.me/NAJRANnu")],
         [InlineKeyboardButton("ادارة الابتكار وريادة الاعمال دبلوم", url="https://t.me/najran288")],
         [InlineKeyboardButton("برمجة وقواعد البيانات دبلوم", url="https://t.me/Nu_121")],
         [InlineKeyboardButton("ذكاء الاعمال وتحليل البيانات دبلوم", url="https://t.me/zcq52")],
+        [InlineKeyboardButton("التسويق التطبيقي دبلوم", url="https://t.me/+ij6m8sT76N41NGI0")],
+        [InlineKeyboardButton("نظم المعلومات", url="https://t.me/+ypdmQZXamzE4NzU0")],
+        [InlineKeyboardButton("التسويق والتجاره الالكترونيه", url="https://t.me/MarketingAndCommerce")],
         [InlineKeyboardButton("⬅️ رجوع للكليات", callback_data="colleges_menu")]
     ]
     return InlineKeyboardMarkup(keyboard)
@@ -107,6 +115,13 @@ def business_keyboard():
         [InlineKeyboardButton("المحاسبه", url="https://t.me/AccountingNU")],
         [InlineKeyboardButton("التسويق والتجاره الالكترونيه", url="https://t.me/CommerceandMarketing")],
         [InlineKeyboardButton("ادارة الموارد البشريه", url="https://t.me/Najran_HR")],
+        [InlineKeyboardButton("⬅️ رجوع للكليات", callback_data="colleges_menu")]
+    ]
+    return InlineKeyboardMarkup(keyboard)
+
+def admsci_keyboard():
+    keyboard = [
+        [InlineKeyboardButton("قروبات تخصصات الاداره", url="https://t.me/admsci")],
         [InlineKeyboardButton("⬅️ رجوع للكليات", callback_data="colleges_menu")]
     ]
     return InlineKeyboardMarkup(keyboard)
@@ -146,6 +161,8 @@ def important_links_keyboard():
         [InlineKeyboardButton("🎓 البلاك بورد", url="https://lms.nu.edu.sa/")],
         [InlineKeyboardButton("🌐 البوابة الإلكترونية", url="https://edugate.nu.edu.sa/nu/init")],
         [InlineKeyboardButton("✉️ الإيميل الجامعي", callback_data="university_email")],
+        [InlineKeyboardButton("🏆 قناة الشهادات الإحترافية جامعة نجران", url="https://t.me/NUprofcert_channel")],
+        [InlineKeyboardButton("👥 قروب الشهادات الإحترافية جامعة نجران", url="https://t.me/NUprofcert")],
         [InlineKeyboardButton("⬅️ القائمة الرئيسية", callback_data="main_menu")]
     ]
     return InlineKeyboardMarkup(keyboard)
@@ -195,6 +212,8 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await query.edit_message_text("📊 الكلية التطبيقية (الدبلومات):", reply_markup=applied_keyboard())
     elif data == "business_college":
         await query.edit_message_text("💼 إدارة الأعمال والأنظمة:", reply_markup=business_keyboard())
+    elif data == "admsci_college":
+        await query.edit_message_text("🏛️ كليه اداره الأعمال:", reply_markup=admsci_keyboard())
 
     # السكن
     elif data == "housing_menu":
