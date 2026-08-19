@@ -103,7 +103,6 @@ def applied_keyboard():
         [InlineKeyboardButton("ذكاء الاعمال وتحليل البيانات دبلوم", url="https://t.me/zcq52")],
         [InlineKeyboardButton("التسويق التطبيقي دبلوم", url="https://t.me/+ij6m8sT76N41NGI0")],
         [InlineKeyboardButton("نظم المعلومات", url="https://t.me/+ypdmQZXamzE4NzU0")],
-        [InlineKeyboardButton("التسويق والتجاره الالكترونيه", url="https://t.me/MarketingAndCommerce")],
         [InlineKeyboardButton("⬅️ رجوع للكليات", callback_data="colleges_menu")]
     ]
     return InlineKeyboardMarkup(keyboard)
@@ -113,7 +112,7 @@ def business_keyboard():
         [InlineKeyboardButton("إدارة الاعمال", url="https://t.me/Business_NU")],
         [InlineKeyboardButton("الأنظمة (القانون)", url="https://t.me/NU_lawyer")],
         [InlineKeyboardButton("المحاسبه", url="https://t.me/AccountingNU")],
-        [InlineKeyboardButton("التسويق والتجاره الالكترونيه", url="https://t.me/CommerceandMarketing")],
+        [InlineKeyboardButton("التسويق والتجاره الالكترونيه", url="https://t.me/MarketingAndCommerce")],
         [InlineKeyboardButton("ادارة الموارد البشريه", url="https://t.me/Najran_HR")],
         [InlineKeyboardButton("⬅️ رجوع للكليات", callback_data="colleges_menu")]
     ]
