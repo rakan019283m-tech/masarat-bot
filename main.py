@@ -133,6 +133,7 @@ def academic_menu_keyboard():
          InlineKeyboardButton("🚶‍♂️ الطلبة الزائرون", callback_data="visitor")],
         [InlineKeyboardButton("⚖️ الفرق بين التأجيل والاعتذار", callback_data="diff")],
         [InlineKeyboardButton("📚 توصيف المقرر", callback_data="course_desc")],
+        [InlineKeyboardButton("📋 الخطط الدراسية", url="https://edugate.nu.edu.sa/nu/ui/guest/major_plans/index/facultiesMajorsIndex.faces")],
         [InlineKeyboardButton("🔄 نظام وتحويل الكليات", url="https://t.me/Najran1_NU/1553671")],
         [InlineKeyboardButton("📊 التقديرات", url="https://t.me/Najran1_NU/1553731"),
          InlineKeyboardButton("⚠️ انقطاع المكافأة", callback_data="reward_stop")],
