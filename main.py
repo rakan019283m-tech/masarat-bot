@@ -16,11 +16,10 @@ def main_menu_keyboard():
          InlineKeyboardButton("📅 التقويم الجامعي", url="https://t.me/Najran1_NU/1553668")],
         [InlineKeyboardButton("⭐ مراتب الشرف", url="https://t.me/Najran1_NU/1553663"),
          InlineKeyboardButton("🗺️ أرقام المباني", url="https://t.me/Najran1_NU/1553674")],
-        [InlineKeyboardButton("🔄 نظام وتحويل الكليات", url="https://t.me/Najran1_NU/1553671"),
-         InlineKeyboardButton("📋 شروط القبول", callback_data="admission_guide")],
-        [InlineKeyboardButton("📞 أرقام التواصل والمسؤولين", url="https://t.me/Najran1_NU/1553665"),
-         InlineKeyboardButton("📚 توصيف المقرر", callback_data="course_desc")],
-        [InlineKeyboardButton("📢 القناة الرسمية", url="https://t.me/NAJRAN1_NU")]
+        [InlineKeyboardButton("📋 شروط القبول", callback_data="admission_guide"),
+         InlineKeyboardButton("📞 أرقام التواصل والمسؤولين", url="https://t.me/Najran1_NU/1553665")],
+        [InlineKeyboardButton("📚 توصيف المقرر", callback_data="course_desc"),
+         InlineKeyboardButton("📢 القناة الرسمية", url="https://t.me/NAJRAN1_NU")]
     ]
     return InlineKeyboardMarkup(keyboard)
 
@@ -38,6 +37,7 @@ def colleges_menu_keyboard():
          InlineKeyboardButton("🗣️ اللغات والترجمة", url="https://t.me/Najran_Translation")],
         [InlineKeyboardButton("🧪 العلوم والآداب", url="https://t.me/Arts_sciencesNU"),
          InlineKeyboardButton("👥 الموارد البشرية", url="https://t.me/Najran_HR")],
+        [InlineKeyboardButton("📢 قنوات الجامعة", url="https://t.me/Najran1_NU/1524031")],
         [InlineKeyboardButton("⬅️ القائمة الرئيسية", callback_data="main_menu")]
     ]
     return InlineKeyboardMarkup(keyboard)
@@ -125,6 +125,9 @@ def academic_menu_keyboard():
         [InlineKeyboardButton("⏳ تأجيل الفصل الدراسي", callback_data="postpone"),
          InlineKeyboardButton("🚶‍♂️ الطلبة الزائرون", callback_data="visitor")],
         [InlineKeyboardButton("⚖️ الفرق بين التأجيل والاعتذار", callback_data="diff")],
+        [InlineKeyboardButton("🔄 نظام وتحويل الكليات", url="https://t.me/Najran1_NU/1553671")],
+        [InlineKeyboardButton("📊 التقديرات", url="https://t.me/Najran1_NU/1502748"),
+         InlineKeyboardButton("⚠️ انقطاع المكافأة", callback_data="reward_stop")],
         [InlineKeyboardButton("⬅️ القائمة الرئيسية", callback_data="main_menu")]
     ]
     return InlineKeyboardMarkup(keyboard)
@@ -250,6 +253,16 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             "• **الاعتذار:** يطلب خلال الفصل، يُحسب من المدة الدراسية، ويؤثر على المكافأة بحسب اللائحة."
         )
         await query.edit_message_text(text, reply_markup=academic_menu_keyboard(), parse_mode="Markdown")
+    elif data == "reward_stop":
+        text = (
+            "🔺 حالات انقطاع المكافأة:\n"
+            "- عند انخفاض المعدل التراكمي 1.99 فأقل.\n"
+            "- عند الانسحاب أو تأجيل الفصل الدراسي.\n"
+            "- عند طيّ القيد\n"
+            "- عند تجاوز الخطة \n"
+            "- عند صدور قرار تأديبي بحق الطالب.؜"
+        )
+        await query.edit_message_text(text, reply_markup=academic_menu_keyboard(), parse_mode="Markdown")
 
     # شروط القبول العامة
     elif data == "admission_guide":
@@ -285,17 +298,25 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # توصيف المقرر
     elif data == "course_desc":
         text = (
-            "📚 **طريقة إظهار توصيف المقرر:**\n\n"
-            "موقع الجامعة ⬅️ الثلاث شخطات ⬅️ الكليات ⬅️ الكلية والتخصص ⬅️ برنامج ⬅️ توصيف المقرر."
+            "🔺 لإظهار توصيف المقرر :\n"
+            "https://www.nu.edu.sa/\n"
+            "ادخل الموقع هنا \n"
+            "> الثلاث الشرطات \n"
+            "> الكليات \n"
+            "> تختار الكلية \n"
+            "> اذا كانت لها اكثر من تخصص \n"
+            "> تختار التخصص \n"
+            "> برنامج \n"
+            "> توصيف المقرر ㅤ؜؜؜"
         )
-        await query.edit_message_text(text, reply_markup=back_to_main_keyboard(), parse_mode="Markdown")
+        await query.edit_message_text(text, reply_markup=back_to_main_keyboard())
 
 def main():
     TOKEN = "8722924986:AAEVU_oqQDYFs6LG18D-A0VJJfr9Ry2Jyr0"
     app = ApplicationBuilder().token(TOKEN).build()
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CallbackQueryHandler(button_handler))
-    print("🤖 البوت يعمل بكامل الروابط والقوائم بدون أي أخطاء...")
+    print("🤖 البوت يعمل بكامل الإضافات الجديدة...")
     app.run_polling()
 
 if __name__ == "__main__":
