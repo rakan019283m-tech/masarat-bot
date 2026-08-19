@@ -2,20 +2,25 @@ import logging
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import ApplicationBuilder, CallbackQueryHandler, CommandHandler, ContextTypes
 
-# تفعيل تسجيل الأخطاء
 logging.basicConfig(format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO)
 
 # ----------------- القوائم الرئيسية -----------------
 
 def main_menu_keyboard():
     keyboard = [
-        [InlineKeyboardButton("🎓 الكليات والتخصصات والقروبات", callback_data="colleges_menu")],
+        [InlineKeyboardButton("🎓 الكليات والقروبات", callback_data="colleges_menu"),
+         InlineKeyboardButton("📈 شروط المعدل", callback_data="gpa_conditions")],
         [InlineKeyboardButton("🏢 السكن الجامعي", callback_data="housing_menu"),
          InlineKeyboardButton("📝 الحركات الأكاديمية", callback_data="academic_menu")],
+        [InlineKeyboardButton("🏥 المستشفى الجامعي", callback_data="hospital_menu"),
+         InlineKeyboardButton("📅 التقويم الجامعي", callback_data="calendar")],
         [InlineKeyboardButton("⭐ مراتب الشرف", callback_data="honors"),
-         InlineKeyboardButton("📧 الإيميل الجامعي", callback_data="university_email")],
-        [InlineKeyboardButton("🔗 روابط هامة", callback_data="links_menu"),
-         InlineKeyboardButton("📢 القناة الرسمية", url="https://t.me/NAJRAN1_NU")]
+         InlineKeyboardButton("🗺️ أرقام المباني", callback_data="buildings")],
+        [InlineKeyboardButton("🔄 نظام وتحويل الكليات", callback_data="transfer_system"),
+         InlineKeyboardButton("📋 شروط القبول", callback_data="admission_guide")],
+        [InlineKeyboardButton("📞 أرقام التواصل والمسؤولين", callback_data="contacts_guide"),
+         InlineKeyboardButton("📚 توصيف المقرر", callback_data="course_desc")],
+        [InlineKeyboardButton("📢 القناة الرسمية", url="https://t.me/NAJRAN1_NU")]
     ]
     return InlineKeyboardMarkup(keyboard)
 
@@ -33,7 +38,6 @@ def colleges_menu_keyboard():
     ]
     return InlineKeyboardMarkup(keyboard)
 
-# 1. الكليات الصحية
 def health_keyboard():
     keyboard = [
         [InlineKeyboardButton("التمريض", url="https://t.me/najran_Rn")],
@@ -47,7 +51,6 @@ def health_keyboard():
     ]
     return InlineKeyboardMarkup(keyboard)
 
-# 2. الهندسة
 def eng_keyboard():
     keyboard = [
         [InlineKeyboardButton("الهندسة الميكانيكية", url="https://t.me/Eng_Najran/4605")],
@@ -61,7 +64,6 @@ def eng_keyboard():
     ]
     return InlineKeyboardMarkup(keyboard)
 
-# 3. الحاسب
 def cs_keyboard():
     keyboard = [
         [InlineKeyboardButton("علوم الحاسب ونظم المعلومات", url="https://t.me/cscis_NU")],
@@ -69,7 +71,6 @@ def cs_keyboard():
     ]
     return InlineKeyboardMarkup(keyboard)
 
-# 4. الشريعة
 def sharia_keyboard():
     keyboard = [
         [InlineKeyboardButton("شريعه", url="https://t.me/nuedu6")],
@@ -77,7 +78,6 @@ def sharia_keyboard():
     ]
     return InlineKeyboardMarkup(keyboard)
 
-# 5. الكلية التطبيقية (دبلوم)
 def applied_keyboard():
     keyboard = [
         [InlineKeyboardButton("محاسبة دبلوم", url="https://t.me/appliedaccountingNu")],
@@ -92,7 +92,6 @@ def applied_keyboard():
     ]
     return InlineKeyboardMarkup(keyboard)
 
-# 6. إدارة الأعمال والأنظمة
 def business_keyboard():
     keyboard = [
         [InlineKeyboardButton("إدارة الاعمال", url="https://t.me/Business_NU")],
@@ -104,7 +103,7 @@ def business_keyboard():
     ]
     return InlineKeyboardMarkup(keyboard)
 
-# ----------------- قوائم السكن والحركات الأكاديمية -----------------
+# ----------------- القوائم الفرعية -----------------
 
 def housing_menu_keyboard():
     keyboard = [
@@ -119,17 +118,11 @@ def academic_menu_keyboard():
     keyboard = [
         [InlineKeyboardButton("طريقة الانسحاب", callback_data="withdraw"),
          InlineKeyboardButton("طريقة الاعتذار", callback_data="apology")],
-        [InlineKeyboardButton("طلبات اعادة قيد", callback_data="re_enroll"),
-         InlineKeyboardButton("تأجيل فصل", callback_data="postpone")],
-        [InlineKeyboardButton("طالب زائر", callback_data="visitor")],
-        [InlineKeyboardButton("⬅️ القائمة الرئيسية", callback_data="main_menu")]
-    ]
-    return InlineKeyboardMarkup(keyboard)
-
-def links_menu_keyboard():
-    keyboard = [
-        [InlineKeyboardButton("🔗 رابط البوابة الإلكترونية", url="https://edugate.nu.edu.sa/nu/init"),
-         InlineKeyboardButton("🔗 رابط بلاك بورد", url="https://lms.nu.edu.sa/")],
+        [InlineKeyboardButton("🔄 إعادة القيد للمنقطع", callback_data="re_enroll_img"),
+         InlineKeyboardButton("📈 احتساب المعدل المتوقع", callback_data="expected_gpa_img")],
+        [InlineKeyboardButton("⏳ تأجيل الفصل الدراسي", callback_data="postpone_img"),
+         InlineKeyboardButton("🚶‍♂️ الطلبة الزائرون", callback_data="visitor_img")],
+        [InlineKeyboardButton("⚖️ الفرق بين التأجيل والاعتذار", callback_data="diff_img")],
         [InlineKeyboardButton("⬅️ القائمة الرئيسية", callback_data="main_menu")]
     ]
     return InlineKeyboardMarkup(keyboard)
@@ -224,54 +217,91 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             "• نوع الحركة: اعتذار عن (الفصل - مقرر)"
         )
         await query.edit_message_text(text, reply_markup=academic_menu_keyboard(), parse_mode="Markdown")
-    elif data == "re_enroll":
-        text = (
-            "🔄 **طلبات إعادة قيد:**\n\n"
-            "البوابة الإلكترونية ⬅️ إدخال الطلبات ⬅️ إدخال أو إظهار الحركات الأكاديمية ⬅️ طلب إعادة قيد (حفظ)."
-        )
-        await query.edit_message_text(text, reply_markup=academic_menu_keyboard(), parse_mode="Markdown")
-    elif data == "postpone":
-        text = (
-            "⏸️ **تأجيل فصل:**\n\n"
-            "البوابة الإلكترونية ⬅️ إدخال الطلبات ⬅️ إدخال أو إظهار الحركات الأكاديمية ⬅️ طلب تأجيل ترم (حفظ)."
-        )
-        await query.edit_message_text(text, reply_markup=academic_menu_keyboard(), parse_mode="Markdown")
-    elif data == "visitor":
-        text = (
-            "🚶‍♂️ **طالب زائر:**\n\n"
-            "البوابة الإلكترونية ⬅️ إدخال الطلبات ⬅️ إدخال طلب زائر ⬅️ بعد إدخال الطلب (حفظ)."
-        )
-        await query.edit_message_text(text, reply_markup=academic_menu_keyboard(), parse_mode="Markdown")
+    
+    # الصور المرفقة للحركات الأكاديمية الجديدة والقديمة
+    elif data == "re_enroll_img":
+        await query.message.reply_photo(photo="ضع_رابط_صورة_إعادة_القيد_هنا", caption="🔄 إعادة القيد للمنقطع")
+        await query.message.reply_text("القائمة الرئيسية:", reply_markup=main_menu_keyboard())
+    elif data == "expected_gpa_img":
+        await query.message.reply_photo(photo="ضع_رابط_صورة_احتساب_المعدل_هنا", caption="📈 احتساب المعدل المتوقع")
+        await query.message.reply_text("القائمة الرئيسية:", reply_markup=main_menu_keyboard())
+    elif data == "postpone_img":
+        await query.message.reply_photo(photo="ضع_رابط_صورة_تأجيل_الفصل_هنا", caption="⏳ تأجيل الفصل الدراسي")
+        await query.message.reply_text("القائمة الرئيسية:", reply_markup=main_menu_keyboard())
+    elif data == "visitor_img":
+        await query.message.reply_photo(photo="ضع_رابط_صورة_الطلبة_الزائرين_هنا", caption="🚶‍♂️ الطلبة الزائرون")
+        await query.message.reply_text("القائمة الرئيسية:", reply_markup=main_menu_keyboard())
+    elif data == "diff_img":
+        await query.message.reply_photo(photo="ضع_رابط_صورة_الفرق_بين_التأجيل_والاعتذار_هنا", caption="⚖️ الفرق بين التأجيل والاعتذار")
+        await query.message.reply_text("القائمة الرئيسية:", reply_markup=main_menu_keyboard())
 
-    # مراتب الشرف
+    # مراتب الشرف (صورة)
     elif data == "honors":
-        text = (
-            "⭐ **مراتب الشرف:**\n\n"
-            "رابط البوابة الإلكترونية:\nhttps://edugate.nu.edu.sa/nu/init\n\n"
-            "رابط بلاك بورد:\nhttps://lms.nu.edu.sa/"
-        )
-        await query.edit_message_text(text, reply_markup=back_to_main_keyboard())
+        await query.message.reply_photo(photo="ضع_رابط_صورة_مرتبة_الشرف_هنا", caption="⭐ شروط وتفاصيل مراتب الشرف")
+        await query.message.reply_text("القائمة الرئيسية:", reply_markup=main_menu_keyboard())
 
-    # الإيميل الجامعي
-    elif data == "university_email":
-        text = (
-            "👥 **الإيميل الجامعي:**\n\n"
-            "جميع طلاب وطالبات جامعة نجران لديهم إيميل جامعي بصيغة:\n"
-            "الرقم الجامعي @nu.edu.sa\n"
-            "مثال: 123456789@nu.edu.sa\n\n"
-            "🔒 **كلمة المرور:**\n"
-            "هي نفسها كلمة مرور الدخول على البوابة الإلكترونية.\n\n"
-            "✅ **طريقة التفعيل:**\n"
-            "عند الضغط على إضافة حساب وإكمال البيانات المطلوبة، يتم تفعيل الإيميل مباشرة.\n\n"
-            "👤 **الدخول على الإيميل:**\n"
-            "عن طريق موقع Outlook ✉️\n\n"
-            "📋 **ملاحظة:**\n"
-            "تفعيل الإيميل الجامعي ضروري لاستقبال وإرسال الرسائل مع دكاترة المقررات والإدارة."
-        )
-        await query.edit_message_text(text, reply_markup=back_to_main_keyboard())
+    # شروط القبول العامة (صورة)
+    elif data == "admission_guide":
+        await query.message.reply_photo(photo="ضع_رابط_صورة_شروط_القبول_هنا", caption="📋 شروط القبول العامة")
+        await query.message.reply_text("القائمة الرئيسية:", reply_markup=main_menu_keyboard())
 
-    elif data == "links_menu":
-        await query.edit_message_text("🔗 الروابط الهامة:", reply_markup=links_menu_keyboard())
+    # أرقام المباني (صورة خريطة المباني)
+    elif data == "buildings":
+        await query.message.reply_photo(photo="ضع_رابط_صورة_أرقام_المباني_هنا", caption="🗺️ دليل أرقام ومواقع المباني بجامعة نجران")
+        await query.message.reply_text("القائمة الرئيسية:", reply_markup=main_menu_keyboard())
+
+    # التقويم الجامعي (صورة)
+    elif data == "calendar":
+        await query.message.reply_photo(photo="ضع_رابط_صورة_التقويم_هنا", caption="📅 التقويم الجامعي")
+        await query.message.reply_text("القائمة الرئيسية:", reply_markup=main_menu_keyboard())
+
+    # جدول ونظام التحويل بين الكليات (HTML / صورة تفصيلية)
+    elif data == "transfer_system":
+        text = (
+            "🔄 **نظام التحويل بين الكليات والتخصصات:**\n\n"
+            "• التحويل متاح إلكترونياً عبر البوابة الأكاديمية.\n"
+            "• يشترط تحقيق المعدل المطلوب للتخصص المراد التحويل إليه.\n"
+            "• توافر مقاعد شاغرة في التخصص.\n"
+            "• الالتزام بالمواعيد المحددة للتحويل في التقويم الجامعي.\n"
+            "• عند التحويل من تخصص أدبي لعلمي يُشترط أن تكون الثانوية علمية."
+        )
+        await query.edit_message_text(text, reply_markup=back_to_main_keyboard(), parse_mode="Markdown")
+
+    # أرقام التواصل والمسؤولين (ملف PDF)
+    elif data == "contacts_guide":
+        await query.message.reply_document(document="ضع_رابط_ملف_أرقام_التواصل_هنا", caption="📞 دليل أرقام التواصل والمسؤولين بعمادة القبول والتسجيل")
+        await query.message.reply_text("القائمة الرئيسية:", reply_markup=main_menu_keyboard())
+
+    # المستشفى الجامعي
+    elif data == "hospital_menu":
+        text = (
+            "🏥 **المستشفى الجامعي:**\n\n"
+            "☎️ التقارير الطبية والاستفسارات.\n"
+            "💼 حجز ومتابعة المواعيد: 0175416322\n"
+            "📞 لطلب فتح ملف جديد: +966 17 541 6304\n\n"
+            "📋 **المتطلبات:** صورة الهوية، البطاقة الجامعية، العنوان السكني، توكلنا."
+        )
+        await query.edit_message_text(text, reply_markup=back_to_main_keyboard(), parse_mode="Markdown")
+
+    # شرط المعدل بعد السنة المشتركة
+    elif data == "gpa_conditions":
+        text = (
+            "📈 **شرط المعدل بعد السنة المشتركة:**\n\n"
+            "• 4.25 فأعلى ← الطب والجراحة\n"
+            "• 3.75 فأعلى ← طب الأسنان\n"
+            "• 3.25 فأعلى ← دكتور صيدلي والتمريض\n"
+            "• 3.25 فأعلى ← علوم الحاسب ونظم المعلومات\n"
+            "• 3.00 فأعلى ← الهندسة والعلوم الطبية التطبيقية"
+        )
+        await query.edit_message_text(text, reply_markup=back_to_main_keyboard(), parse_mode="Markdown")
+
+    # توصيف المقرر
+    elif data == "course_desc":
+        text = (
+            "📚 **طريقة إظهار توصيف المقرر:**\n\n"
+            "موقع الجامعة ⬅️ الثلاث شخطات ⬅️ الكليات ⬅️ الكلية والتخصص ⬅️ برنامج ⬅️ توصيف المقرر."
+        )
+        await query.edit_message_text(text, reply_markup=back_to_main_keyboard(), parse_mode="Markdown")
 
     elif data == "no_link":
         await query.answer("عذراً، هذا التخصص ليس له رابط حالياً.", show_alert=True)
@@ -281,7 +311,7 @@ def main():
     app = ApplicationBuilder().token(TOKEN).build()
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CallbackQueryHandler(button_handler))
-    print("🤖 البوت يعمل بكامل البيانات والتخصصات بدقة...")
+    print("🤖 البوت يعمل بكامل الأقسام والصور والملفات وجداول التحويل...")
     app.run_polling()
 
 if __name__ == "__main__":
