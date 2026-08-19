@@ -13,12 +13,12 @@ def main_menu_keyboard():
         [InlineKeyboardButton("🏢 السكن الجامعي", callback_data="housing_menu"),
          InlineKeyboardButton("📝 الحركات الأكاديمية", callback_data="academic_menu")],
         [InlineKeyboardButton("🏥 المستشفى الجامعي", callback_data="hospital_menu"),
-         InlineKeyboardButton("📅 التقويم الجامعي", callback_data="calendar")],
-        [InlineKeyboardButton("⭐ مراتب الشرف", callback_data="honors"),
-         InlineKeyboardButton("🗺️ أرقام المباني", callback_data="buildings")],
-        [InlineKeyboardButton("🔄 نظام وتحويل الكليات", callback_data="transfer_system"),
+         InlineKeyboardButton("📅 التقويم الجامعي", url="https://t.me/Najran1_NU/1553668")],
+        [InlineKeyboardButton("⭐ مراتب الشرف", url="https://t.me/Najran1_NU/1553663"),
+         InlineKeyboardButton("🗺️ أرقام المباني", url="https://t.me/Najran1_NU/1553674")],
+        [InlineKeyboardButton("🔄 نظام وتحويل الكليات", url="https://t.me/Najran1_NU/1553671"),
          InlineKeyboardButton("📋 شروط القبول", callback_data="admission_guide")],
-        [InlineKeyboardButton("📞 أرقام التواصل والمسؤولين", callback_data="contacts_guide"),
+        [InlineKeyboardButton("📞 أرقام التواصل والمسؤولين", url="https://t.me/Najran1_NU/1553665"),
          InlineKeyboardButton("📚 توصيف المقرر", callback_data="course_desc")],
         [InlineKeyboardButton("📢 القناة الرسمية", url="https://t.me/NAJRAN1_NU")]
     ]
@@ -34,6 +34,10 @@ def colleges_menu_keyboard():
          InlineKeyboardButton("⚖️ الشريعة", callback_data="sharia_college")],
         [InlineKeyboardButton("📊 الكلية التطبيقية (دبلومات)", callback_data="applied_college"),
          InlineKeyboardButton("💼 إدارة الأعمال والأنظمة", callback_data="business_college")],
+        [InlineKeyboardButton("📖 كلية التربية", url="https://t.me/education_NU"),
+         InlineKeyboardButton("🗣️ اللغات والترجمة", url="https://t.me/Najran_Translation")],
+        [InlineKeyboardButton("🧪 العلوم والآداب", url="https://t.me/Arts_sciencesNU"),
+         InlineKeyboardButton("👥 الموارد البشرية", url="https://t.me/Najran_HR")],
         [InlineKeyboardButton("⬅️ القائمة الرئيسية", callback_data="main_menu")]
     ]
     return InlineKeyboardMarkup(keyboard)
@@ -84,9 +88,7 @@ def applied_keyboard():
         [InlineKeyboardButton("ادارة اعمال دبلوم", url="https://t.me/NUBAdiploma")],
         [InlineKeyboardButton("دعم فني دبلوم", url="https://t.me/NAJRANnu")],
         [InlineKeyboardButton("ادارة الابتكار وريادة الاعمال دبلوم", url="https://t.me/najran288")],
-        [InlineKeyboardButton("التسويق التطبيقي (لا يوجد رابط)", callback_data="no_link")],
         [InlineKeyboardButton("برمجة وقواعد البيانات دبلوم", url="https://t.me/Nu_121")],
-        [InlineKeyboardButton("نظم المعلومات دبلوم (لا يوجد رابط)", callback_data="no_link")],
         [InlineKeyboardButton("ذكاء الاعمال وتحليل البيانات دبلوم", url="https://t.me/zcq52")],
         [InlineKeyboardButton("⬅️ رجوع للكليات", callback_data="colleges_menu")]
     ]
@@ -97,7 +99,7 @@ def business_keyboard():
         [InlineKeyboardButton("إدارة الاعمال", url="https://t.me/Business_NU")],
         [InlineKeyboardButton("الأنظمة (القانون)", url="https://t.me/NU_lawyer")],
         [InlineKeyboardButton("المحاسبه", url="https://t.me/AccountingNU")],
-        [InlineKeyboardButton("التسويق والتجاره الالكترونيه", url="https://t.me/MarketingAndCommerce")],
+        [InlineKeyboardButton("التسويق والتجاره الالكترونيه", url="https://t.me/CommerceandMarketing")],
         [InlineKeyboardButton("ادارة الموارد البشريه", url="https://t.me/Najran_HR")],
         [InlineKeyboardButton("⬅️ رجوع للكليات", callback_data="colleges_menu")]
     ]
@@ -118,11 +120,11 @@ def academic_menu_keyboard():
     keyboard = [
         [InlineKeyboardButton("طريقة الانسحاب", callback_data="withdraw"),
          InlineKeyboardButton("طريقة الاعتذار", callback_data="apology")],
-        [InlineKeyboardButton("🔄 إعادة القيد للمنقطع", callback_data="re_enroll_img"),
-         InlineKeyboardButton("📈 احتساب المعدل المتوقع", callback_data="expected_gpa_img")],
-        [InlineKeyboardButton("⏳ تأجيل الفصل الدراسي", callback_data="postpone_img"),
-         InlineKeyboardButton("🚶‍♂️ الطلبة الزائرون", callback_data="visitor_img")],
-        [InlineKeyboardButton("⚖️ الفرق بين التأجيل والاعتذار", callback_data="diff_img")],
+        [InlineKeyboardButton("🔄 إعادة القيد للمنقطع", callback_data="re_enroll"),
+         InlineKeyboardButton("📈 احتساب المعدل المتوقع", callback_data="expected_gpa")],
+        [InlineKeyboardButton("⏳ تأجيل الفصل الدراسي", callback_data="postpone"),
+         InlineKeyboardButton("🚶‍♂️ الطلبة الزائرون", callback_data="visitor")],
+        [InlineKeyboardButton("⚖️ الفرق بين التأجيل والاعتذار", callback_data="diff")],
         [InlineKeyboardButton("⬅️ القائمة الرئيسية", callback_data="main_menu")]
     ]
     return InlineKeyboardMarkup(keyboard)
@@ -215,69 +217,47 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             "• طريقة التقديم: البوابة الإلكترونية ⬅️ الطلبات الأكاديمية ⬅️ الحركات الأكاديمية ⬅️ نوع الحركة: اعتذار."
         )
         await query.edit_message_text(text, reply_markup=academic_menu_keyboard(), parse_mode="Markdown")
-    
-    # الحركات الأكاديمية مع إرسال الصورة والشرح النصي معاً
-    elif data == "re_enroll_img":
-        caption_text = "🔄 **إعادة القيد للمنقطع:**\nيحق للطالب المنقطع أو المنسحب التقدم بطلب إعادة القيد عبر البوابة الإلكترونية للعودة إلى نفس تجميعه ومستواه الأكاديمي ضمن المدة النظامية."
-        await query.message.reply_photo(photo="AgACAgQAAxkBAAIC...re_enroll", caption=caption_text, parse_mode="Markdown")
-        await query.message.reply_text("القائمة الرئيسية:", reply_markup=main_menu_keyboard())
-    elif data == "expected_gpa_img":
-        caption_text = "📈 **احتساب المعدل المتوقع:**\nيمكنك من خلال هذه الخدمة حساب معدلك الفصلي والتراكمي المتوقع بناءً على الدرجات والساعات المتوقعة."
-        await query.message.reply_photo(photo="AgACAgQAAxkBAAIC...gpa", caption=caption_text, parse_mode="Markdown")
-        await query.message.reply_text("القائمة الرئيسية:", reply_markup=main_menu_keyboard())
-    elif data == "postpone_img":
-        caption_text = "⏳ **تأجيل الفصل الدراسي:**\n• موعد التقديم: قبل بدء الدراسة.\n• آلية الاحتساب: غير محسوب ضمن المدة الدراسية ولا يدخل ضمن المكافآت.\n• طريقة التقديم: إلكترونياً عبر البوابة الأكاديمية."
-        await query.message.reply_photo(photo="AgACAgQAAxkBAAIC...postpone", caption=caption_text, parse_mode="Markdown")
-        await query.message.reply_text("القائمة الرئيسية:", reply_markup=main_menu_keyboard())
-    elif data == "visitor_img":
-        caption_text = "🚶‍♂️ **الطلبة الزائرون:**\nيتاح للطالب دراسة مقررات في جامعة أخرى أو فرع آخر وفق شروط محددة وموافقة القسم العلمي عبر البوابة الأكاديمية."
-        await query.message.reply_photo(photo="AgACAgQAAxkBAAIC...visitor", caption=caption_text, parse_mode="Markdown")
-        await query.message.reply_text("القائمة الرئيسية:", reply_markup=main_menu_keyboard())
-    elif data == "diff_img":
-        caption_text = "⚖️ **الفرق بين التأجيل والاعتذار:**\nمقارنة رسمية توضح الفروقات الكاملة من حيث مدة الدراسة، المكافآت، ومواعيد التقديم."
-        await query.message.reply_photo(photo="AgACAgQAAxkBAAIC...diff", caption=caption_text, parse_mode="Markdown")
-        await query.message.reply_text("القائمة الرئيسية:", reply_markup=main_menu_keyboard())
-
-    # مراتب الشرف
-    elif data == "honors":
-        caption_text = "⭐ **شروط وتفاصيل مراتب الشرف:**\nتمنح مرتبة الشرف الأولى أو الثانية بناءً على المعدل التراكمي واجتياز الساعات المحددة."
-        await query.message.reply_photo(photo="AgACAgQAAxkBAAIC...honors", caption=caption_text, parse_mode="Markdown")
-        await query.message.reply_text("القائمة الرئيسية:", reply_markup=main_menu_keyboard())
+    elif data == "re_enroll":
+        text = (
+            "🔄 **إعادة القيد للمنقطع:**\n\n"
+            "يحق للطالب المنقطع أو المنسحب التقدم بطلب إعادة القيد عبر البوابة الإلكترونية للعودة إلى نفس تجميعه ومستواه الأكاديمي ضمن المدة النظامية."
+        )
+        await query.edit_message_text(text, reply_markup=academic_menu_keyboard(), parse_mode="Markdown")
+    elif data == "expected_gpa":
+        text = (
+            "📈 **احتساب المعدل المتوقع:**\n\n"
+            "يمكنك من خلال هذه الخدمة حساب معدلك الفصلي والتراكمي المتوقع بناءً على الدرجات والساعات المتوقعة عبر البوابة الأكاديمية."
+        )
+        await query.edit_message_text(text, reply_markup=academic_menu_keyboard(), parse_mode="Markdown")
+    elif data == "postpone":
+        text = (
+            "⏳ **تأجيل الفصل الدراسي:**\n\n"
+            "• موعد التقديم: قبل بدء الدراسة.\n"
+            "• آلية الاحتساب: غير محسوب ضمن المدة الدراسية ولا يدخل ضمن المكافآت.\n"
+            "• طريقة التقديم: إلكترونياً عبر البوابة الأكاديمية."
+        )
+        await query.edit_message_text(text, reply_markup=academic_menu_keyboard(), parse_mode="Markdown")
+    elif data == "visitor":
+        text = (
+            "🚶‍♂️ **الطلبة الزائرون:**\n\n"
+            "يتاح للطالب دراسة مقررات في جامعة أخرى أو فرع آخر وفق شروط محددة وموافقة القسم العلمي عبر البوابة الأكاديمية."
+        )
+        await query.edit_message_text(text, reply_markup=academic_menu_keyboard(), parse_mode="Markdown")
+    elif data == "diff":
+        text = (
+            "⚖️ **الفرق بين التأجيل والاعتذار:**\n\n"
+            "• **التأجيل:** يطلب قبل الفصل، لا يُحسب من المدة، ولا يقطع المكافأة.\n"
+            "• **الاعتذار:** يطلب خلال الفصل، يُحسب من المدة الدراسية، ويؤثر على المكافأة بحسب اللائحة."
+        )
+        await query.edit_message_text(text, reply_markup=academic_menu_keyboard(), parse_mode="Markdown")
 
     # شروط القبول العامة
     elif data == "admission_guide":
-        caption_text = "📋 **شروط القبول العامة بجامعة نجران:**\nتوضيح كامل للشروط والمعايير الخاصة بالقبول في برامج البكالوريوس والدبلوم."
-        await query.message.reply_photo(photo="AgACAgQAAxkBAAIC...admission", caption=caption_text, parse_mode="Markdown")
-        await query.message.reply_text("القائمة الرئيسية:", reply_markup=main_menu_keyboard())
-
-    # أرقام المباني
-    elif data == "buildings":
-        caption_text = "🗺️ **دليل أرقام ومواقع المباني بجامعة نجران:**\nدليل إرشادي يوضح أرقام جميع المباني بالمدينة الجامعية من 1 إلى 75."
-        await query.message.reply_photo(photo="AgACAgQAAxkBAAIC...buildings", caption=caption_text, parse_mode="Markdown")
-        await query.message.reply_text("القائمة الرئيسية:", reply_markup=main_menu_keyboard())
-
-    # التقويم الجامعي
-    elif data == "calendar":
-        caption_text = "📅 **التقويم الجامعي:**\nيوضح مواعيد بداية ونهاية الفصل الدراسي، الإجازات، وفترات الحذف والإضافة والاختبارات."
-        await query.message.reply_photo(photo="AgACAgQAAxkBAAIC...calendar", caption=caption_text, parse_mode="Markdown")
-        await query.message.reply_text("القائمة الرئيسية:", reply_markup=main_menu_keyboard())
-
-    # نظام التحويل بين الكليات
-    elif data == "transfer_system":
         text = (
-            "🔄 **نظام التحويل بين الكليات والتخصصات:**\n\n"
-            "• التحويل متاح إلكترونياً عبر البوابة الأكاديمية.\n"
-            "• يشترط تحقيق المعدل المطلوب للتخصص المراد التحويل إليه.\n"
-            "• توافر مقاعد شاغرة في التخصص.\n"
-            "• الالتزام بالمواعيد المحددة للتحويل في التقويم الجامعي.\n"
-            "• عند التحويل من تخصص أدبي لعلمي يُشترط أن تكون الثانوية علمية."
+            "📋 **شروط القبول العامة بجامعة نجران:**\n\n"
+            "توضيح كامل للشروط والمعايير الخاصة بالقبول في برامج البكالوريوس والدبلوم عبر بوابة العمادة."
         )
         await query.edit_message_text(text, reply_markup=back_to_main_keyboard(), parse_mode="Markdown")
-
-    # أرقام التواصل والمسؤولين (ملف PDF)
-    elif data == "contacts_guide":
-        await query.message.reply_document(document="BQACAgQAAxkBAAIC...contacts_pdf", caption="📞 دليل أرقام التواصل والمسؤولين بعمادة القبول والتسجيل")
-        await query.message.reply_text("القائمة الرئيسية:", reply_markup=main_menu_keyboard())
 
     # المستشفى الجامعي
     elif data == "hospital_menu":
@@ -310,15 +290,12 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
         await query.edit_message_text(text, reply_markup=back_to_main_keyboard(), parse_mode="Markdown")
 
-    elif data == "no_link":
-        await query.answer("عذراً، هذا التخصص ليس له رابط حالياً.", show_alert=True)
-
 def main():
     TOKEN = "8722924986:AAEVU_oqQDYFs6LG18D-A0VJJfr9Ry2Jyr0"
     app = ApplicationBuilder().token(TOKEN).build()
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CallbackQueryHandler(button_handler))
-    print("🤖 البوت يعمل بكامل الأقسام والصور والشرح النصي المدمج...")
+    print("🤖 البوت يعمل بكامل الروابط والقوائم بدون أي أخطاء...")
     app.run_polling()
 
 if __name__ == "__main__":
