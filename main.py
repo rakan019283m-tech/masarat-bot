@@ -30,7 +30,7 @@ def colleges_menu_keyboard():
         [InlineKeyboardButton("🩺 الكليات الصحية", callback_data="health_colleges"),
          InlineKeyboardButton("⚙️ كلية الهندسة", callback_data="eng_colleges")],
         [InlineKeyboardButton("💻 الحاسب وعلوم المعلومات", callback_data="cs_college"),
-         InlineKeyboardButton("⚖️ الشريعة", callback_data="sharia_college")],
+         InlineKeyboardButton("⚖️ الشريعة وأصول الدين", callback_data="sharia_college")],
         [InlineKeyboardButton("📊 الكلية التطبيقية (دبلومات)", callback_data="applied_college"),
          InlineKeyboardButton("💼 إدارة الأعمال والأنظمة", callback_data="business_college")],
         [InlineKeyboardButton("🏛️ كليه اداره الأعمال", callback_data="admsci_college")],
