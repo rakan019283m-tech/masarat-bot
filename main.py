@@ -209,53 +209,60 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await query.edit_message_text(text, reply_markup=academic_menu_keyboard(), parse_mode="Markdown")
     elif data == "apology":
         text = (
-            "⚠️ **طريقة الاعتذار (عن فصل - مقرر):**\n\n"
-            "من البوابة الإلكترونية:\n"
-            "• إدخال الطلبات\n"
-            "• إدخال أو إظهار الحركات الأكاديمية\n"
-            "• إدخال حركة أكاديمية جديدة\n"
-            "• نوع الحركة: اعتذار عن (الفصل - مقرر)"
+            "⚠️ **طريقة الاعتذار عن فصل أو مقرر:**\n\n"
+            "• موعد التقديم: متاح حتى قبل الاختبارات النهائية بخمسة أسابيع.\n"
+            "• آلية الاحتساب: محسوب ضمن المدة الدراسية والمكافآت.\n"
+            "• طريقة التقديم: البوابة الإلكترونية ⬅️ الطلبات الأكاديمية ⬅️ الحركات الأكاديمية ⬅️ نوع الحركة: اعتذار."
         )
         await query.edit_message_text(text, reply_markup=academic_menu_keyboard(), parse_mode="Markdown")
     
-    # الصور المرفقة للحركات الأكاديمية الجديدة والقديمة
+    # الحركات الأكاديمية مع إرسال الصورة والشرح النصي معاً
     elif data == "re_enroll_img":
-        await query.message.reply_photo(photo="ضع_رابط_صورة_إعادة_القيد_هنا", caption="🔄 إعادة القيد للمنقطع")
+        caption_text = "🔄 **إعادة القيد للمنقطع:**\nيحق للطالب المنقطع أو المنسحب التقدم بطلب إعادة القيد عبر البوابة الإلكترونية للعودة إلى نفس تجميعه ومستواه الأكاديمي ضمن المدة النظامية."
+        await query.message.reply_photo(photo="AgACAgQAAxkBAAIC...re_enroll", caption=caption_text, parse_mode="Markdown")
         await query.message.reply_text("القائمة الرئيسية:", reply_markup=main_menu_keyboard())
     elif data == "expected_gpa_img":
-        await query.message.reply_photo(photo="ضع_رابط_صورة_احتساب_المعدل_هنا", caption="📈 احتساب المعدل المتوقع")
+        caption_text = "📈 **احتساب المعدل المتوقع:**\nيمكنك من خلال هذه الخدمة حساب معدلك الفصلي والتراكمي المتوقع بناءً على الدرجات والساعات المتوقعة."
+        await query.message.reply_photo(photo="AgACAgQAAxkBAAIC...gpa", caption=caption_text, parse_mode="Markdown")
         await query.message.reply_text("القائمة الرئيسية:", reply_markup=main_menu_keyboard())
     elif data == "postpone_img":
-        await query.message.reply_photo(photo="ضع_رابط_صورة_تأجيل_الفصل_هنا", caption="⏳ تأجيل الفصل الدراسي")
+        caption_text = "⏳ **تأجيل الفصل الدراسي:**\n• موعد التقديم: قبل بدء الدراسة.\n• آلية الاحتساب: غير محسوب ضمن المدة الدراسية ولا يدخل ضمن المكافآت.\n• طريقة التقديم: إلكترونياً عبر البوابة الأكاديمية."
+        await query.message.reply_photo(photo="AgACAgQAAxkBAAIC...postpone", caption=caption_text, parse_mode="Markdown")
         await query.message.reply_text("القائمة الرئيسية:", reply_markup=main_menu_keyboard())
     elif data == "visitor_img":
-        await query.message.reply_photo(photo="ضع_رابط_صورة_الطلبة_الزائرين_هنا", caption="🚶‍♂️ الطلبة الزائرون")
+        caption_text = "🚶‍♂️ **الطلبة الزائرون:**\nيتاح للطالب دراسة مقررات في جامعة أخرى أو فرع آخر وفق شروط محددة وموافقة القسم العلمي عبر البوابة الأكاديمية."
+        await query.message.reply_photo(photo="AgACAgQAAxkBAAIC...visitor", caption=caption_text, parse_mode="Markdown")
         await query.message.reply_text("القائمة الرئيسية:", reply_markup=main_menu_keyboard())
     elif data == "diff_img":
-        await query.message.reply_photo(photo="ضع_رابط_صورة_الفرق_بين_التأجيل_والاعتذار_هنا", caption="⚖️ الفرق بين التأجيل والاعتذار")
+        caption_text = "⚖️ **الفرق بين التأجيل والاعتذار:**\nمقارنة رسمية توضح الفروقات الكاملة من حيث مدة الدراسة، المكافآت، ومواعيد التقديم."
+        await query.message.reply_photo(photo="AgACAgQAAxkBAAIC...diff", caption=caption_text, parse_mode="Markdown")
         await query.message.reply_text("القائمة الرئيسية:", reply_markup=main_menu_keyboard())
 
-    # مراتب الشرف (صورة)
+    # مراتب الشرف
     elif data == "honors":
-        await query.message.reply_photo(photo="ضع_رابط_صورة_مرتبة_الشرف_هنا", caption="⭐ شروط وتفاصيل مراتب الشرف")
+        caption_text = "⭐ **شروط وتفاصيل مراتب الشرف:**\nتمنح مرتبة الشرف الأولى أو الثانية بناءً على المعدل التراكمي واجتياز الساعات المحددة."
+        await query.message.reply_photo(photo="AgACAgQAAxkBAAIC...honors", caption=caption_text, parse_mode="Markdown")
         await query.message.reply_text("القائمة الرئيسية:", reply_markup=main_menu_keyboard())
 
-    # شروط القبول العامة (صورة)
+    # شروط القبول العامة
     elif data == "admission_guide":
-        await query.message.reply_photo(photo="ضع_رابط_صورة_شروط_القبول_هنا", caption="📋 شروط القبول العامة")
+        caption_text = "📋 **شروط القبول العامة بجامعة نجران:**\nتوضيح كامل للشروط والمعايير الخاصة بالقبول في برامج البكالوريوس والدبلوم."
+        await query.message.reply_photo(photo="AgACAgQAAxkBAAIC...admission", caption=caption_text, parse_mode="Markdown")
         await query.message.reply_text("القائمة الرئيسية:", reply_markup=main_menu_keyboard())
 
-    # أرقام المباني (صورة خريطة المباني)
+    # أرقام المباني
     elif data == "buildings":
-        await query.message.reply_photo(photo="ضع_رابط_صورة_أرقام_المباني_هنا", caption="🗺️ دليل أرقام ومواقع المباني بجامعة نجران")
+        caption_text = "🗺️ **دليل أرقام ومواقع المباني بجامعة نجران:**\nدليل إرشادي يوضح أرقام جميع المباني بالمدينة الجامعية من 1 إلى 75."
+        await query.message.reply_photo(photo="AgACAgQAAxkBAAIC...buildings", caption=caption_text, parse_mode="Markdown")
         await query.message.reply_text("القائمة الرئيسية:", reply_markup=main_menu_keyboard())
 
-    # التقويم الجامعي (صورة)
+    # التقويم الجامعي
     elif data == "calendar":
-        await query.message.reply_photo(photo="ضع_رابط_صورة_التقويم_هنا", caption="📅 التقويم الجامعي")
+        caption_text = "📅 **التقويم الجامعي:**\nيوضح مواعيد بداية ونهاية الفصل الدراسي، الإجازات، وفترات الحذف والإضافة والاختبارات."
+        await query.message.reply_photo(photo="AgACAgQAAxkBAAIC...calendar", caption=caption_text, parse_mode="Markdown")
         await query.message.reply_text("القائمة الرئيسية:", reply_markup=main_menu_keyboard())
 
-    # جدول ونظام التحويل بين الكليات (HTML / صورة تفصيلية)
+    # نظام التحويل بين الكليات
     elif data == "transfer_system":
         text = (
             "🔄 **نظام التحويل بين الكليات والتخصصات:**\n\n"
@@ -269,7 +276,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     # أرقام التواصل والمسؤولين (ملف PDF)
     elif data == "contacts_guide":
-        await query.message.reply_document(document="ضع_رابط_ملف_أرقام_التواصل_هنا", caption="📞 دليل أرقام التواصل والمسؤولين بعمادة القبول والتسجيل")
+        await query.message.reply_document(document="BQACAgQAAxkBAAIC...contacts_pdf", caption="📞 دليل أرقام التواصل والمسؤولين بعمادة القبول والتسجيل")
         await query.message.reply_text("القائمة الرئيسية:", reply_markup=main_menu_keyboard())
 
     # المستشفى الجامعي
@@ -311,7 +318,7 @@ def main():
     app = ApplicationBuilder().token(TOKEN).build()
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CallbackQueryHandler(button_handler))
-    print("🤖 البوت يعمل بكامل الأقسام والصور والملفات وجداول التحويل...")
+    print("🤖 البوت يعمل بكامل الأقسام والصور والشرح النصي المدمج...")
     app.run_polling()
 
 if __name__ == "__main__":
