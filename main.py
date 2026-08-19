@@ -19,6 +19,8 @@ def main_menu_keyboard():
         [InlineKeyboardButton("📋 شروط القبول", callback_data="admission_guide"),
          InlineKeyboardButton("📞 أرقام التواصل والمسؤولين", url="https://t.me/Najran1_NU/1553665")],
         [InlineKeyboardButton("📚 توصيف المقرر", callback_data="course_desc"),
+         InlineKeyboardButton("🔗 روابط مهمة", callback_data="important_links")],
+        [InlineKeyboardButton("📚 تبادل كتب", url="https://t.me/book_exchangeNU"),
          InlineKeyboardButton("📢 القناة الرسمية", url="https://t.me/NAJRAN1_NU")]
     ]
     return InlineKeyboardMarkup(keyboard)
@@ -37,6 +39,8 @@ def colleges_menu_keyboard():
          InlineKeyboardButton("🗣️ اللغات والترجمة", url="https://t.me/Najran_Translation")],
         [InlineKeyboardButton("🧪 العلوم والآداب", url="https://t.me/Arts_sciencesNU"),
          InlineKeyboardButton("👥 الموارد البشرية", url="https://t.me/Najran_HR")],
+        [InlineKeyboardButton("📖 الجامعة الإلكترونية", url="https://t.me/Saudi_EUnu"),
+         InlineKeyboardButton("🎓 الدراسات العليا", url="https://t.me/DpgsNU")],
         [InlineKeyboardButton("📢 قنوات الجامعة", url="https://t.me/Najran1_NU/1524031")],
         [InlineKeyboardButton("⬅️ القائمة الرئيسية", callback_data="main_menu")]
     ]
@@ -51,6 +55,7 @@ def health_keyboard():
         [InlineKeyboardButton("المختبرات الإكلينيكية", url="https://t.me/Ky5nvumgDnEyMTk0")],
         [InlineKeyboardButton("الأشعة التشخيصية", url="https://t.me/radiology154")],
         [InlineKeyboardButton("العلاج الطبيعي", url="https://t.me/UN_Physicaltherapy")],
+        [InlineKeyboardButton("مساري الصحي", url="https://t.me/HealthyPathNu")],
         [InlineKeyboardButton("⬅️ رجوع للكليات", callback_data="colleges_menu")]
     ]
     return InlineKeyboardMarkup(keyboard)
@@ -64,6 +69,7 @@ def eng_keyboard():
         [InlineKeyboardButton("الهندسة الكهربائية", url="https://t.me/Eng_Najran/4604")],
         [InlineKeyboardButton("الهندسة الكيميائيه", url="https://t.me/Eng_Najran/4603")],
         [InlineKeyboardButton("هندسة الميكاترونيكس", url="https://t.me/Eng_Najran/56657")],
+        [InlineKeyboardButton("مساري الهندسي", url="https://t.me/EngineeringPathNu")],
         [InlineKeyboardButton("⬅️ رجوع للكليات", callback_data="colleges_menu")]
     ]
     return InlineKeyboardMarkup(keyboard)
@@ -71,6 +77,7 @@ def eng_keyboard():
 def cs_keyboard():
     keyboard = [
         [InlineKeyboardButton("علوم الحاسب ونظم المعلومات", url="https://t.me/cscis_NU")],
+        [InlineKeyboardButton("مساري الحاسوبي", url="https://t.me/ComputerPathNu")],
         [InlineKeyboardButton("⬅️ رجوع للكليات", callback_data="colleges_menu")]
     ]
     return InlineKeyboardMarkup(keyboard)
@@ -111,6 +118,7 @@ def housing_menu_keyboard():
     keyboard = [
         [InlineKeyboardButton("🏠 سكن الطلاب", callback_data="housing_boys"),
          InlineKeyboardButton("👩‍🎓 سكن الطالبات", callback_data="housing_girls")],
+        [InlineKeyboardButton("📜 شروط السكن", callback_data="housing_conditions")],
         [InlineKeyboardButton("🔗 قروب السكن", url="https://t.me/NajranUniversity_housing")],
         [InlineKeyboardButton("⬅️ القائمة الرئيسية", callback_data="main_menu")]
     ]
@@ -128,6 +136,14 @@ def academic_menu_keyboard():
         [InlineKeyboardButton("🔄 نظام وتحويل الكليات", url="https://t.me/Najran1_NU/1553671")],
         [InlineKeyboardButton("📊 التقديرات", url="https://t.me/Najran1_NU/1502748"),
          InlineKeyboardButton("⚠️ انقطاع المكافأة", callback_data="reward_stop")],
+        [InlineKeyboardButton("⬅️ القائمة الرئيسية", callback_data="main_menu")]
+    ]
+    return InlineKeyboardMarkup(keyboard)
+
+def important_links_keyboard():
+    keyboard = [
+        [InlineKeyboardButton("🎓 البلاك بورد", url="https://lms.nu.edu.sa/")],
+        [InlineKeyboardButton("🌐 البوابة الإلكترونية", url="https://edugate.nu.edu.sa/nu/init")],
         [InlineKeyboardButton("⬅️ القائمة الرئيسية", callback_data="main_menu")]
     ]
     return InlineKeyboardMarkup(keyboard)
@@ -200,6 +216,15 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             "+ تقدرين تطلعين للنقل الجماعي والمطار بسائق خاص بوكالة من ولي أمرك."
         )
         await query.edit_message_text(text, reply_markup=housing_menu_keyboard(), parse_mode="Markdown")
+    elif data == "housing_conditions":
+        text = (
+            "📜 **شروط السكن الجامعي:**\n\n"
+            "1️⃣ أن تكون المسافة بين مقر إقامة الطالب / الطالبة ومقر الإسكان الطلابي (80) كيلومترا فأكثر.\n\n"
+            "2️⃣ أن تكون المسافة بين مقر الثانوية العامة التي درس فيها الطالب / الطالبة ومقر الإسكان الطلابي (80) كيلومترا فأكثر.\n\n"
+            "3️⃣ إحضار صورة واضحة من شهادة الثانوية العامة للتحقق من مقر الجهة التعليمية المانحة للشهادة ومدى استيفاء شرط المسافة المعتمد.\n\n"
+            "4️⃣ في حالة ثبوت عدم استيفاء شرط المسافة، يُستبعد طلب الطالب / الطالبة من إجراءات الفرز والمفاضلة على السكن الطلابي، مع اتخاذ ما يلزم وفق الأنظمة واللوائح المعتمدة."
+        )
+        await query.edit_message_text(text, reply_markup=housing_menu_keyboard(), parse_Mode="Markdown")
 
     # الحركات الأكاديمية
     elif data == "academic_menu":
@@ -264,6 +289,10 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
         await query.edit_message_text(text, reply_markup=academic_menu_keyboard(), parse_mode="Markdown")
 
+    # روابط مهمة
+    elif data == "important_links":
+        await query.edit_message_text("🔗 الروابط المهمة والأنظمة الإلكترونية:", reply_markup=important_links_keyboard())
+
     # شروط القبول العامة
     elif data == "admission_guide":
         text = (
@@ -316,7 +345,7 @@ def main():
     app = ApplicationBuilder().token(TOKEN).build()
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CallbackQueryHandler(button_handler))
-    print("🤖 البوت يعمل بكامل الإضافات الجديدة...")
+    print("🤖 البوت يعمل بكامل التحديثات الأخيرة...")
     app.run_polling()
 
 if __name__ == "__main__":
