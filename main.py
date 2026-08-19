@@ -18,9 +18,7 @@ def main_menu_keyboard():
          InlineKeyboardButton("🗺️ أرقام المباني", url="https://t.me/Najran1_NU/1553674")],
         [InlineKeyboardButton("📋 شروط القبول", callback_data="admission_guide"),
          InlineKeyboardButton("📞 أرقام التواصل والمسؤولين", url="https://t.me/Najran1_NU/1553665")],
-        [InlineKeyboardButton("📚 توصيف المقرر", callback_data="course_desc"),
-         InlineKeyboardButton("🔗 روابط مهمة", callback_data="important_links")],
-        [InlineKeyboardButton("📚 تبادل كتب", url="https://t.me/book_exchangeNU"),
+        [InlineKeyboardButton("🔗 روابط مهمة", callback_data="important_links"),
          InlineKeyboardButton("📢 القناة الرسمية", url="https://t.me/NAJRAN1_NU")]
     ]
     return InlineKeyboardMarkup(keyboard)
@@ -41,6 +39,7 @@ def colleges_menu_keyboard():
          InlineKeyboardButton("👥 الموارد البشرية", url="https://t.me/Najran_HR")],
         [InlineKeyboardButton("📖 الجامعة الإلكترونية", url="https://t.me/Saudi_EUnu"),
          InlineKeyboardButton("🎓 الدراسات العليا", url="https://t.me/DpgsNU")],
+        [InlineKeyboardButton("📚 تبادل كتب", url="https://t.me/book_exchangeNU")],
         [InlineKeyboardButton("📢 قنوات الجامعة", url="https://t.me/Najran1_NU/1524031")],
         [InlineKeyboardButton("⬅️ القائمة الرئيسية", callback_data="main_menu")]
     ]
@@ -133,6 +132,7 @@ def academic_menu_keyboard():
         [InlineKeyboardButton("⏳ تأجيل الفصل الدراسي", callback_data="postpone"),
          InlineKeyboardButton("🚶‍♂️ الطلبة الزائرون", callback_data="visitor")],
         [InlineKeyboardButton("⚖️ الفرق بين التأجيل والاعتذار", callback_data="diff")],
+        [InlineKeyboardButton("📚 توصيف المقرر", callback_data="course_desc")],
         [InlineKeyboardButton("🔄 نظام وتحويل الكليات", url="https://t.me/Najran1_NU/1553671")],
         [InlineKeyboardButton("📊 التقديرات", url="https://t.me/Najran1_NU/1553731"),
          InlineKeyboardButton("⚠️ انقطاع المكافأة", callback_data="reward_stop")],
@@ -145,6 +145,13 @@ def important_links_keyboard():
         [InlineKeyboardButton("🎓 البلاك بورد", url="https://lms.nu.edu.sa/")],
         [InlineKeyboardButton("🌐 البوابة الإلكترونية", url="https://edugate.nu.edu.sa/nu/init")],
         [InlineKeyboardButton("✉️ الإيميل الجامعي", callback_data="university_email")],
+        [InlineKeyboardButton("⬅️ القائمة الرئيسية", callback_data="main_menu")]
+    ]
+    return InlineKeyboardMarkup(keyboard)
+
+def admission_guide_keyboard():
+    keyboard = [
+        [InlineKeyboardButton("📊 توزيع النسب", url="https://t.me/Najran1_NU/1553739")],
         [InlineKeyboardButton("⬅️ القائمة الرئيسية", callback_data="main_menu")]
     ]
     return InlineKeyboardMarkup(keyboard)
@@ -288,6 +295,20 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             "- عند صدور قرار تأديبي بحق الطالب.؜"
         )
         await query.edit_message_text(text, reply_markup=academic_menu_keyboard(), parse_mode="Markdown")
+    elif data == "course_desc":
+        text = (
+            "🔺 لإظهار توصيف المقرر :\n"
+            "https://www.nu.edu.sa/\n"
+            "ادخل الموقع هنا \n"
+            "> الثلاث الشرطات \n"
+            "> الكليات \n"
+            "> تختار الكلية \n"
+            "> اذا كانت لها اكثر من تخصص \n"
+            "> تختار التخصص \n"
+            "> برنامج \n"
+            "> توصيف المقرر ㅤ؜؜؜"
+        )
+        await query.edit_message_text(text, reply_markup=academic_menu_keyboard())
 
     # روابط مهمة
     elif data == "important_links":
@@ -315,7 +336,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             "📋 **شروط القبول العامة بجامعة نجران:**\n\n"
             "توضيح كامل للشروط والمعايير الخاصة بالقبول في برامج البكالوريوس والدبلوم عبر بوابة العمادة."
         )
-        await query.edit_message_text(text, reply_markup=back_to_main_keyboard(), parse_mode="Markdown")
+        await query.edit_message_text(text, reply_markup=admission_guide_keyboard(), parse_mode="Markdown")
 
     # المستشفى الجامعي
     elif data == "hospital_menu":
@@ -339,22 +360,6 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             "• 3.00 فأعلى ← الهندسة والعلوم الطبية التطبيقية"
         )
         await query.edit_message_text(text, reply_markup=back_to_main_keyboard(), parse_mode="Markdown")
-
-    # توصيف المقرر
-    elif data == "course_desc":
-        text = (
-            "🔺 لإظهار توصيف المقرر :\n"
-            "https://www.nu.edu.sa/\n"
-            "ادخل الموقع هنا \n"
-            "> الثلاث الشرطات \n"
-            "> الكليات \n"
-            "> تختار الكلية \n"
-            "> اذا كانت لها اكثر من تخصص \n"
-            "> تختار التخصص \n"
-            "> برنامج \n"
-            "> توصيف المقرر ㅤ؜؜؜"
-        )
-        await query.edit_message_text(text, reply_markup=back_to_main_keyboard())
 
 def main():
     TOKEN = "8722924986:AAEVU_oqQDYFs6LG18D-A0VJJfr9Ry2Jyr0"
