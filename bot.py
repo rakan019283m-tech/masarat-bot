@@ -1,3 +1,6 @@
+
+
+
 """
 bot.py
 ------
@@ -131,7 +134,16 @@ def main() -> None:
 
     application = Application.builder().token(token).build()
 
-    # (إضافات الهاندلر الخاصة بك هنا...)
+    # تسجيل الهاندلر هنا لكي يستجيب البوت للأوامر
+    conv_handler = ConversationHandler(
+        entry_points=[CommandHandler("start", start)],
+        states={
+            ASK_COMPLETED: [MessageHandler(filters.TEXT & ~filters.COMMAND, receive_completed)],
+            ASK_TERM: [MessageHandler(filters.TEXT & ~filters.COMMAND, receive_term)],
+        },
+        fallbacks=[CommandHandler("cancel", cancel)],
+    )
+    application.add_handler(conv_handler)
 
     # تشغيل البوت مع مسح أي اتصالات معلقة أو قديمة في تيليجرام فوراً
     application.run_polling(drop_pending_updates=True)
