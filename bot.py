@@ -2,14 +2,6 @@
 bot.py
 ------
 بوت تيليجرام "الخطة الدراسية الذكي".
-
-الفكرة:
-  1) الطالب يرسل رموز المواد اللي خلصها (أو "لا شيء")
-  2) الطالب يختار الترم القادم (أول / ثاني / صيفي)
-  3) البوت يرجع:
-     - المواد المقترحة للتسجيل (تجنبًا للتعارض وتراعي المتطلبات)
-     - المواد اللي استبعدها بسبب تعارض جدول أو تجاوز سقف الساعات
-     - تنبيه بالمواد الحرجة المتبقية
 """
 
 import logging
@@ -132,7 +124,7 @@ async def cancel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
 
 def main() -> None:
-    load_dotenv()  # يقرأ متغيرات البيئة من ملف .env إذا موجود
+    load_dotenv()
     token = os.environ.get("BOT_TOKEN")
     if not token:
         raise RuntimeError(
@@ -152,39 +144,9 @@ def main() -> None:
 
     application.add_handler(conv_handler)
 
-    # التعديل هنا ليتوافق مع منصة Railway بشكل صحيح
-    port = int(os.environ.get("PORT", "8443"))
-    
-    # محاولة جلب رابط Railway أو استخدام الرابط المتوفر
-    external_url = (
-        os.environ.get("RENDER_EXTERNAL_URL") or 
-        os.environ.get("RAILWAY_STATIC_URL") or 
-        os.environ.get("WEBHOOK_URL")
-    )
-
-    if external_url:
-        if not external_url.startswith("https://"):
-            external_url = f"https://{external_url}"
-            
-        logger.info("تشغيل البوت بنظام Webhook على %s", external_url)
-        application.run_webhook(
-            listen="0.0.0.0",
-            port=port,
-            url_path=token,
-            webhook_url=f"{external_url}/{token}",
-        )
-    else:
-        # إذا لم يكن الرابط الخارجي جاهزاً، نجعل الـ Webhook يعتمد على المنفذ المحلي لكي يستجيب لـ Railway
-        domain = os.environ.get("RAILWAY_PROJECT_DOMAIN", "localhost")
-        webhook_target = f"https://{domain}/{token}"
-        
-        logger.info("تشغيل البوت بنظام Webhook على المنفذ المحلي %s", port)
-        application.run_webhook(
-            listen="0.0.0.0",
-            port=port,
-            url_path=token,
-            webhook_url=webhook_target,
-        )
+    # تشغيل البوت باستخدام Polling (الأنسب والأكثر استقراراً لتجنب مشاكل الـ Webhook)
+    logger.info("تشغيل البوت بنظام Polling على Railway")
+    application.run_polling(drop_pending_updates=True)
 
 
 if __name__ == "__main__":
