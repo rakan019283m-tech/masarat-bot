@@ -127,27 +127,14 @@ def main() -> None:
     load_dotenv()
     token = os.environ.get("BOT_TOKEN")
     if not token:
-        raise RuntimeError(
-            "لازم تحدد متغير البيئة BOT_TOKEN بتوكن البوت اللي أخذته من BotFather."
-        )
+        raise RuntimeError("لازم تحدد متغير البيئة BOT_TOKEN")
 
     application = Application.builder().token(token).build()
 
-    conv_handler = ConversationHandler(
-        entry_points=[CommandHandler("start", start)],
-        states={
-            ASK_COMPLETED: [MessageHandler(filters.TEXT & ~filters.COMMAND, receive_completed)],
-            ASK_TERM: [MessageHandler(filters.TEXT & ~filters.COMMAND, receive_term)],
-        },
-        fallbacks=[CommandHandler("cancel", cancel)],
-    )
+    # (إضافات الهاندلر الخاصة بك هنا...)
 
-    application.add_handler(conv_handler)
-
-    # تشغيل البوت بنظام Polling مع تنظيف أي تعارضات سابقة تلقائياً
-    logger.info("تشغيل البوت بنظام Polling")
+    # تشغيل البوت مع مسح أي اتصالات معلقة أو قديمة في تيليجرام فوراً
     application.run_polling(drop_pending_updates=True)
-
 
 if __name__ == "__main__":
     main()
