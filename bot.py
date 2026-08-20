@@ -11,9 +11,13 @@ bot.py
      - المواد اللي استبعدها بسبب تعارض جدول أو تجاوز سقف الساعات
      - تنبيه بالمواد الحرجة المتبقية
 
-التشغيل:
+التشغيل محليًا (Polling):
   export BOT_TOKEN="التوكن اللي تاخذه من BotFather"
   python bot.py
+
+التشغيل على استضافة زي Render (Webhook):
+  يكتشف البوت تلقائيًا متغير البيئة RENDER_EXTERNAL_URL ويشتغل
+  بنظام Webhook بدلاً من Polling، عشان يتوافق مع الخطة المجانية.
 """
 
 import logging
@@ -155,7 +159,25 @@ def main() -> None:
     )
 
     application.add_handler(conv_handler)
-    application.run_polling()
+
+    external_url = os.environ.get("RENDER_EXTERNAL_URL")
+    port = int(os.environ.get("PORT", "8443"))
+
+    if external_url:
+        # وضع Webhook: يستخدم لما البوت يشتغل على Render
+        # (الخطة المجانية عندهم تتطلب استقبال طلبات HTTP عشان
+        # الخدمة ما "تنام" - Render يوفر PORT و RENDER_EXTERNAL_URL تلقائيًا)
+        logger.info("تشغيل البوت بنظام Webhook على %s", external_url)
+        application.run_webhook(
+            listen="0.0.0.0",
+            port=port,
+            url_path=token,
+            webhook_url=f"{external_url}/{token}",
+        )
+    else:
+        # وضع Polling: للتشغيل المحلي على جهازك
+        logger.info("تشغيل البوت بنظام Polling (محلي)")
+        application.run_polling()
 
 
 if __name__ == "__main__":
