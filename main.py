@@ -16,10 +16,11 @@ def main_menu_keyboard():
          InlineKeyboardButton("📅 التقويم الجامعي", url="https://t.me/Najran1_NU/1553668")],
         [InlineKeyboardButton("⭐ مراتب الشرف", url="https://t.me/Najran1_NU/1553663"),
          InlineKeyboardButton("🗺️ أرقام المباني", url="https://t.me/Najran1_NU/1553674")],
-        [InlineKeyboardButton("📋 شروط القبول", callback_data="admission_guide"),
-         InlineKeyboardButton("📞 أرقام التواصل والمسؤولين", url="https://t.me/Najran1_NU/1553665")],
-        [InlineKeyboardButton("🔗 روابط مهمة", callback_data="important_links"),
-         InlineKeyboardButton("📢 قناة جامعة نجران", url="https://t.me/Najran_channel")]
+        [InlineKeyboardButton("📊 نسب القبول", url="https://t.me/Najran1_NU/1555322"),
+         InlineKeyboardButton("📋 شروط القبول", callback_data="admission_guide")],
+        [InlineKeyboardButton("📞 أرقام التواصل والمسؤولين", url="https://t.me/Najran1_NU/1553665"),
+         InlineKeyboardButton("🔗 روابط مهمة", callback_data="important_links")],
+        [InlineKeyboardButton("📢 قناة جامعة نجران", url="https://t.me/Najran_channel")]
     ]
     return InlineKeyboardMarkup(keyboard)
 
