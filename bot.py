@@ -144,8 +144,8 @@ def main() -> None:
 
     application.add_handler(conv_handler)
 
-    # تشغيل البوت باستخدام Polling (الأنسب والأكثر استقراراً لتجنب مشاكل الـ Webhook)
-    logger.info("تشغيل البوت بنظام Polling على Railway")
+    # تشغيل البوت بنظام Polling مع تنظيف أي تعارضات سابقة تلقائياً
+    logger.info("تشغيل البوت بنظام Polling")
     application.run_polling(drop_pending_updates=True)
 
 
