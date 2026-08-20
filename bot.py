@@ -10,14 +10,6 @@ bot.py
      - المواد المقترحة للتسجيل (تجنبًا للتعارض وتراعي المتطلبات)
      - المواد اللي استبعدها بسبب تعارض جدول أو تجاوز سقف الساعات
      - تنبيه بالمواد الحرجة المتبقية
-
-التشغيل محليًا (Polling):
-  export BOT_TOKEN="التوكن اللي تاخذه من BotFather"
-  python bot.py
-
-التشغيل على استضافة زي Render (Webhook):
-  يكتشف البوت تلقائيًا متغير البيئة RENDER_EXTERNAL_URL ويشتغل
-  بنظام Webhook بدلاً من Polling، عشان يتوافق مع الخطة المجانية.
 """
 
 import logging
@@ -57,7 +49,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
     await update.message.reply_text(
         "أهلًا 👋 أنا بوت الخطة الدراسية الذكي.\n\n"
-        "أرسل لي رموز المواد اللي خلصتها مفصولة بفواصل، مثال:\n"
+        "أرسل لي رموز المواد اللي خلصها مفصولة بفواصل، مثال:\n"
         "CS101, MATH101\n\n"
         "أو اكتب 'لا شيء' إذا ما خلصت أي مادة بعد.\n\n"
         f"رموز المواد المتاحة بالخطة:\n{codes_list}",
@@ -160,13 +152,20 @@ def main() -> None:
 
     application.add_handler(conv_handler)
 
-    external_url = os.environ.get("RENDER_EXTERNAL_URL")
+    # التعديل هنا ليتوافق مع منصة Railway بشكل صحيح
     port = int(os.environ.get("PORT", "8443"))
+    
+    # محاولة جلب رابط Railway أو استخدام الرابط المتوفر
+    external_url = (
+        os.environ.get("RENDER_EXTERNAL_URL") or 
+        os.environ.get("RAILWAY_STATIC_URL") or 
+        os.environ.get("WEBHOOK_URL")
+    )
 
     if external_url:
-        # وضع Webhook: يستخدم لما البوت يشتغل على Render
-        # (الخطة المجانية عندهم تتطلب استقبال طلبات HTTP عشان
-        # الخدمة ما "تنام" - Render يوفر PORT و RENDER_EXTERNAL_URL تلقائيًا)
+        if not external_url.startswith("https://"):
+            external_url = f"https://{external_url}"
+            
         logger.info("تشغيل البوت بنظام Webhook على %s", external_url)
         application.run_webhook(
             listen="0.0.0.0",
@@ -175,9 +174,17 @@ def main() -> None:
             webhook_url=f"{external_url}/{token}",
         )
     else:
-        # وضع Polling: للتشغيل المحلي على جهازك
-        logger.info("تشغيل البوت بنظام Polling (محلي)")
-        application.run_polling()
+        # إذا لم يكن الرابط الخارجي جاهزاً، نجعل الـ Webhook يعتمد على المنفذ المحلي لكي يستجيب لـ Railway
+        domain = os.environ.get("RAILWAY_PROJECT_DOMAIN", "localhost")
+        webhook_target = f"https://{domain}/{token}"
+        
+        logger.info("تشغيل البوت بنظام Webhook على المنفذ المحلي %s", port)
+        application.run_webhook(
+            listen="0.0.0.0",
+            port=port,
+            url_path=token,
+            webhook_url=webhook_target,
+        )
 
 
 if __name__ == "__main__":
