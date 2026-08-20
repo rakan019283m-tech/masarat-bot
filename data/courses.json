@@ -1,0 +1,65 @@
+[
+  {
+    "code": "CS101",
+    "name": "مقدمة في البرمجة",
+    "hours": 3,
+    "level": 1,
+    "prerequisites": [],
+    "term_offered": ["أول", "ثاني"],
+    "critical": true
+  },
+  {
+    "code": "CS102",
+    "name": "أساسيات الحاسب",
+    "hours": 2,
+    "level": 1,
+    "prerequisites": [],
+    "term_offered": ["أول", "ثاني", "صيفي"],
+    "critical": false
+  },
+  {
+    "code": "CS201",
+    "name": "هياكل البيانات",
+    "hours": 3,
+    "level": 2,
+    "prerequisites": ["CS101"],
+    "term_offered": ["أول", "ثاني"],
+    "critical": true
+  },
+  {
+    "code": "CS205",
+    "name": "قواعد البيانات",
+    "hours": 3,
+    "level": 3,
+    "prerequisites": ["CS201"],
+    "term_offered": ["أول"],
+    "critical": false
+  },
+  {
+    "code": "CS210",
+    "name": "نظم التشغيل",
+    "hours": 3,
+    "level": 3,
+    "prerequisites": ["CS201"],
+    "term_offered": ["ثاني"],
+    "critical": true
+  },
+  {
+    "code": "MATH101",
+    "name": "حساب تفاضل وتكامل 1",
+    "hours": 4,
+    "level": 1,
+    "prerequisites": [],
+    "term_offered": ["أول", "ثاني"],
+    "critical": true
+  },
+  {
+    "code": "MATH102",
+    "name": "حساب تفاضل وتكامل 2",
+    "hours": 4,
+    "level": 2,
+    "prerequisites": ["MATH101"],
+    "term_offered": ["أول", "ثاني"],
+    "critical": false
+  }
+]
