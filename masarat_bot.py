@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 بوت مسارات الثلاث (صحي / هندسي / حاسوبي)
-مع الروابط، الأسماء، والأرقام والأسعار كاملة
+مع الروابط، الأسماء، والأرقام والأسعار كاملة (محدث ومُحسّن)
 """
 
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
@@ -235,6 +235,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         keyboard = []
         for i, tutor in enumerate(tutors):
+            # استخدام الفهارس القصيرة لتجنب مشكلة حد الـ 64 بايت
             keyboard.append([InlineKeyboardButton(tutor["name"], callback_data=f"tutor|{path_key}|{subj_key}|{i}")])
         
         keyboard.append([InlineKeyboardButton("🔙 رجوع للمواد", callback_data=f"path|{path_key}")])
