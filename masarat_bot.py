@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 بوت مسارات الثلاث (صحي / هندسي / حاسوبي)
-نسخة محدثة مع إضافة علامة ✅ لجميع المدرسين المطلوبين
+نسخة نهائية معدلة لحل مشكلة أزرار رنا ومصطفى وتفاصيلهم
 """
 
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
@@ -35,7 +35,7 @@ DATA = {
                     {"id": "s_elmi_6", "name": "محمد الجنيدي", "contact": "https://t.me/njph80ysical", "phone": "غير متوفر", "price": "300 ريال"},
                     {"id": "s_elmi_7", "name": "يارا الماوردي", "contact": "https://t.me/nagraantagreeby", "phone": "غير متوفر", "price": "350 ريال"},
                     {"id": "s_elmi_8", "name": "احمد مكاوي", "contact": "https://t.me/ahmed11_nu", "phone": "0501381714", "price": "عن بعد 500 / حضوري 800"},
-                    {"id": "s_elmi_9", "name": "مصطفى", "contact": "https://t.me/gmustafamahmoud", "phone": "غير متوفر", "price": "150 ريال"},
+                    {"id": "s_elmi_9", "name": "مصطفى محمود ✅", "contact": "https://t.me/gmustafamahmoud", "phone": "@EngUncle_lolm", "price": "150 ريال"},
                     {"id": "s_elmi_10", "name": "علي محمد", "contact": "https://t.me/najran_math1", "phone": "غير متوفر", "price": "300 ريال"},
                     {"id": "s_elmi_11", "name": "الصمادي", "contact": "https://t.me/alsmadi2024", "phone": "غير متوفر", "price": "عن بعد 400 / حضوري 800"},
                 ]
@@ -157,7 +157,7 @@ DATA = {
                     {"id": "c_phys_4", "name": "أريام محمد", "contact": "https://t.me/collegeless", "phone": "غير متوفر", "price": "350 ريال"},
                     {"id": "c_phys_5", "name": "اشرف رضوان", "contact": "https://t.me/DrAshraf20", "phone": "0531461336", "price": "300 ريال"},
                     {"id": "c_phys_6", "name": "عبداللطيف", "contact": "https://t.me/abdullatifgameel999", "phone": "غير متوفر", "price": "400 ريال"},
-                    {"id": "c_phys_7", "name": "مصطفى", "contact": "https://t.me/gmustafamahmoud", "phone": "غير متوفر", "price": "150 ريال"},
+                    {"id": "c_phys_7", "name": "مصطفى محمود ✅", "contact": "https://t.me/gmustafamahmoud", "phone": "@EngUncle_lolm", "price": "150 ريال"},
                     {"id": "c_phys_8", "name": "الصمادي", "contact": "https://t.me/alsmadi2024", "phone": "غير متوفر", "price": "عن بعد 400 / حضوري 800"},
                     {"id": "c_phys_9", "name": "احمد مكاوي", "contact": "https://t.me/ahmed11_nu", "phone": "0501381714", "price": "عن بعد 500 / حضوري 800"},
                 ]
