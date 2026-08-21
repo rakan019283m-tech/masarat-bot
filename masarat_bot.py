@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 بوت مسارات الثلاث (صحي / هندسي / حاسوبي)
-نسخة نهائية تعتمد على معرفات فريدة لكل مدرس لضمان عمل جميع الأزرار بدون استثناء
+نسخة نهائية مع إضافة علامة ✅ بجانب المدرسين الجدد
 """
 
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
@@ -20,7 +20,7 @@ DATA = {
                 "tutors": [
                     {"id": "s_comp_1", "name": "محمد الجنيدي", "contact": "https://t.me/njph80ysical", "phone": "غير متوفر", "price": "300 ريال"},
                     {"id": "s_comp_2", "name": "مسعد احمد", "contact": "https://t.me/computersciencewithmosaad", "phone": "غير متوفر", "price": "300 ريال"},
-                    {"id": "s_comp_3", "name": "رنا العريقي", "contact": "https://t.me/RanaprogrammingNU", "phone": "@Ra12na_IT", "price": "حاسب 250 ﷼ / برمجة 350 ﷼"},
+                    {"id": "s_comp_3", "name": "رنا العريقي ✅", "contact": "https://t.me/RanaprogrammingNU", "phone": "@Ra12na_IT", "price": "حاسب 250 ﷼ / برمجة 350 ﷼"},
                     {"id": "s_comp_4", "name": "رهيب محمد", "contact": "https://t.me/+RlxTlc5FvJ5hZGQ0", "phone": "@Diamond246", "price": "حاسب 199 ﷼ / برمجة 299 ﷼"},
                 ]
             },
@@ -35,7 +35,7 @@ DATA = {
                     {"id": "s_elmi_6", "name": "محمد الجنيدي", "contact": "https://t.me/njph80ysical", "phone": "غير متوفر", "price": "300 ريال"},
                     {"id": "s_elmi_7", "name": "يارا الماوردي", "contact": "https://t.me/nagraantagreeby", "phone": "غير متوفر", "price": "350 ريال"},
                     {"id": "s_elmi_8", "name": "احمد مكاوي", "contact": "https://t.me/ahmed11_nu", "phone": "0501381714", "price": "عن بعد 500 / حضوري 800"},
-                    {"id": "s_elmi_9", "name": "مصطفى", "contact": "https://t.me/gmustafamahmoud", "phone": "غير متوفر", "price": "150 ريال"},
+                    {"id": "s_elmi_9", "name": "مصطفى ✅", "contact": "https://t.me/gmustafamahmoud", "phone": "غير متوفر", "price": "150 ريال"},
                     {"id": "s_elmi_10", "name": "علي محمد", "contact": "https://t.me/najran_math1", "phone": "غير متوفر", "price": "300 ريال"},
                     {"id": "s_elmi_11", "name": "الصمادي", "contact": "https://t.me/alsmadi2024", "phone": "غير متوفر", "price": "عن بعد 400 / حضوري 800"},
                 ]
@@ -72,7 +72,7 @@ DATA = {
                 "title": "🔬 فيزياء",
                 "tutors": [
                     {"id": "h_phys_1", "name": "ام جنات", "contact": "https://t.me/OmjannattCisvsvnjrn", "phone": "@Srrrr70A", "price": "400 ﷼ (عن بعد)"},
-                    {"id": "h_phys_2", "name": "مصطفى محمود", "contact": "https://t.me/gmustafamahmoud", "phone": "@EngUncle_lolm", "price": "300 ﷼ (عن بعد)"},
+                    {"id": "h_phys_2", "name": "مصطفى محمود ✅", "contact": "https://t.me/gmustafamahmoud", "phone": "@EngUncle_lolm", "price": "300 ﷼ (عن بعد)"},
                     {"id": "h_phys_3", "name": "يوسف محمد", "contact": "https://t.me/Preparatory_withYusuf", "phone": "0593812861", "price": "400 ﷼"},
                     {"id": "h_phys_4", "name": "ام ميار", "contact": "https://t.me/Najranshrohatammyar", "phone": "+966538135853", "price": "300 ﷼ (عن بعد)"},
                     {"id": "h_phys_5", "name": "أريام محمد", "contact": "https://t.me/collegeless", "phone": "غير متوفر", "price": "350 ريال"},
@@ -105,7 +105,7 @@ DATA = {
                 "tutors": [
                     {"id": "h_prog_1", "name": "أدهم وليد", "contact": "https://t.me/+fsBhyLBmkCs3MTFk", "phone": "0543646583", "price": "300 ﷼ (عن بعد)"},
                     {"id": "h_prog_2", "name": "رهيب محمد", "contact": "https://t.me/+RlxTlc5FvJ5hZGQ0", "phone": "@Diamond246", "price": "حاسب 199 ﷼ / برمجة 299 ﷼"},
-                    {"id": "h_prog_3", "name": "رنا العريقي", "contact": "https://t.me/RanaprogrammingNU", "phone": "@Ra12na_IT", "price": "حاسب 250 ﷼ / برمجة 350 ﷼"},
+                    {"id": "h_prog_3", "name": "رنا العريقي ✅", "contact": "https://t.me/RanaprogrammingNU", "phone": "@Ra12na_IT", "price": "حاسب 250 ﷼ / برمجة 350 ﷼"},
                     {"id": "h_prog_4", "name": "محمد الجنيدي", "contact": "https://t.me/njph80ysical", "phone": "غير متوفر", "price": "300 ريال"},
                     {"id": "h_prog_5", "name": "مسعد احمد", "contact": "https://t.me/computersciencewithmosaad", "phone": "غير متوفر", "price": "300 ريال"},
                 ]
@@ -132,7 +132,7 @@ DATA = {
                 "tutors": [
                     {"id": "c_prog_1", "name": "أدهم وليد", "contact": "https://t.me/+fsBhyLBmkCs3MTFk", "phone": "0543646583", "price": "300 ﷼ (عن بعد)"},
                     {"id": "c_prog_2", "name": "رهيب محمد", "contact": "https://t.me/+RlxTlc5FvJ5hZGQ0", "phone": "@Diamond246", "price": "حاسب 199 ﷼ / برمجة 299 ﷼"},
-                    {"id": "c_prog_3", "name": "رنا العريقي", "contact": "https://t.me/RanaprogrammingNU", "phone": "@Ra12na_IT", "price": "حاسب 250 ﷼ / برمجة 350 ﷼"},
+                    {"id": "c_prog_3", "name": "رنا العريقي ✅", "contact": "https://t.me/RanaprogrammingNU", "phone": "@Ra12na_IT", "price": "حاسب 250 ﷼ / برمجة 350 ﷼"},
                     {"id": "c_prog_4", "name": "محمد الجنيدي", "contact": "https://t.me/njph80ysical", "phone": "غير متوفر", "price": "300 ريال"},
                     {"id": "c_prog_5", "name": "مسعد احمد", "contact": "https://t.me/computersciencewithmosaad", "phone": "غير متوفر", "price": "300 ريال"},
                 ]
@@ -157,7 +157,7 @@ DATA = {
                     {"id": "c_phys_4", "name": "أريام محمد", "contact": "https://t.me/collegeless", "phone": "غير متوفر", "price": "350 ريال"},
                     {"id": "c_phys_5", "name": "اشرف رضوان", "contact": "https://t.me/DrAshraf20", "phone": "0531461336", "price": "300 ريال"},
                     {"id": "c_phys_6", "name": "عبداللطيف", "contact": "https://t.me/abdullatifgameel999", "phone": "غير متوفر", "price": "400 ريال"},
-                    {"id": "c_phys_7", "name": "مصطفى", "contact": "https://t.me/gmustafamahmoud", "phone": "غير متوفر", "price": "150 ريال"},
+                    {"id": "c_phys_7", "name": "مصطفى ✅", "contact": "https://t.me/gmustafamahmoud", "phone": "غير متوفر", "price": "150 ريال"},
                     {"id": "c_phys_8", "name": "الصمادي", "contact": "https://t.me/alsmadi2024", "phone": "غير متوفر", "price": "عن بعد 400 / حضوري 800"},
                     {"id": "c_phys_9", "name": "احمد مكاوي", "contact": "https://t.me/ahmed11_nu", "phone": "0501381714", "price": "عن بعد 500 / حضوري 800"},
                 ]
@@ -243,7 +243,6 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         keyboard = []
         for tutor in tutors:
-            # تمرير الـ id الفريد الخاص بكل مدرس مباشرة في الـ callback_data
             keyboard.append([InlineKeyboardButton(tutor["name"], callback_data=f"tutor_{tutor['id']}")])
         
         keyboard.append([InlineKeyboardButton("🔙 رجوع للمواد", callback_data=f"path_{path_key}")])
