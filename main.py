@@ -1,35 +1,44 @@
 import logging
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import (
-    ApplicationBuilder,
-    CallbackQueryHandler,
-    CommandHandler,
-    ContextTypes,
-    ConversationHandler,
-    MessageHandler,
-    filters,
-)
-
-from planner import (
-    load_courses,
-    suggest_plan,
-    remaining_critical_courses,
+    ApplicationBuilder, CallbackQueryHandler, CommandHandler, 
+    ContextTypes, ConversationHandler, MessageHandler, filters
 )
 
 logging.basicConfig(format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO)
 
-# ----------------- حالات محادثة الخطة الدراسية الذكية -----------------
-STUDY_ASK_COMPLETED, STUDY_ASK_TERM = range(2)
+# ----------------- حالات المحادثة للخطة الذكية -----------------
+CHOOSING_MAJOR, ENTERING_PASSED_COURSES = range(2)
+
+# قاعدة بيانات بسيطة للتخصصات والمواد (لتقديم رد ذكي وحساب الساعات)
+STUDY_PLANS = {
+    "علوم حاسب": {
+        "المواد": [
+            {"name": "برمجة 1", "hours": 3, "prereq": []},
+            {"name": "برمجة 2", "hours": 3, "prereq": ["برمجة 1"]},
+            {"name": "هياكل بيانات", "hours": 3, "prereq": ["برمجة 2"]},
+            {"name": "خوارزميات", "hours": 3, "prereq": ["هياكل بيانات"]}
+        ]
+    },
+    "هندسة": {
+        "المواد": [
+            {"name": "رياضيات 1", "hours": 3, "prereq": []},
+            {"name": "رياضيات 2", "hours": 3, "prereq": ["رياضيات 1"]},
+            {"name": "فيزياء 1", "hours": 4, "prereq": []},
+            {"name": "دوائر كهربائية", "hours": 3, "prereq": ["فيزياء 1"]}
+        ]
+    }
+}
 
 # ----------------- القوائم الرئيسية -----------------
 
 def main_menu_keyboard():
     keyboard = [
-        [InlineKeyboardButton("🧠 الخطة الدراسية الذكية", callback_data="study_plan_menu")],
         [InlineKeyboardButton("🎓 الكليات والقروبات", callback_data="colleges_menu"),
          InlineKeyboardButton("📈 شروط المعدل", callback_data="gpa_conditions")],
         [InlineKeyboardButton("🏢 السكن الجامعي", callback_data="housing_menu"),
          InlineKeyboardButton("📝 الحركات الأكاديمية", callback_data="academic_menu")],
+        [InlineKeyboardButton("🧠 الخطة الدراسية الذكية", callback_data="study_plan_start")],
         [InlineKeyboardButton("🏥 المستشفى الجامعي", callback_data="hospital_menu"),
          InlineKeyboardButton("📅 التقويم الجامعي", url="https://t.me/Najran1_NU/1553668")],
         [InlineKeyboardButton("📊 نسب القبول", url="https://t.me/Najran1_NU/1555365"),
@@ -194,18 +203,60 @@ def back_to_main_keyboard():
     keyboard = [[InlineKeyboardButton("⬅️ القائمة الرئيسية", callback_data="main_menu")]]
     return InlineKeyboardMarkup(keyboard)
 
-# ----------------- قوائم الخطة الدراسية الذكية -----------------
+# ----------------- خطوات الخطة الذكية -----------------
 
-def study_term_keyboard():
-    keyboard = [
-        [InlineKeyboardButton("الفصل الأول", callback_data="study_term_أول"),
-         InlineKeyboardButton("الفصل الثاني", callback_data="study_term_ثاني")],
-        [InlineKeyboardButton("الفصل الصيفي", callback_data="study_term_صيفي")],
-        [InlineKeyboardButton("⬅️ القائمة الرئيسية", callback_data="main_menu")],
-    ]
-    return InlineKeyboardMarkup(keyboard)
+async def study_plan_start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    query = update.callback_query
+    await query.answer()
+    await query.edit_message_text(
+        "🧠 أهلاً بك في بوت الخطة الدراسية الذكي.\n\n"
+        "الرجاء كتابة اسم تخصصك بدقة (مثلاً: علوم حاسب أو هندسة):"
+    )
+    return CHOOSING_MAJOR
 
-# ----------------- معالجة الأزرار -----------------
+async def get_major(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    major = update.message.text.strip()
+    if major not in STUDY_PLANS:
+        await update.message.reply_text("❌ عذراً، التخصص غير متوفر حالياً في القاموس. اكتب (علوم حاسب) أو (هندسة) للتجربة:")
+        return CHOOSING_MAJOR
+    
+    context.user_data['major'] = major
+    await update.message.reply_text("✅ ممتاز! الآن أرسل لي أسماء المواد التي اجتزتها مفصولة بفاصلة (مثلاً: برمجة 1, برمجة 2):")
+    return ENTERING_PASSED_COURSES
+
+async def get_passed_courses(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    passed_input = update.message.text.split(',')
+    passed = [c.strip() for c in passed_input]
+    major = context.user_data.get('major')
+    
+    plan = STUDY_PLANS[major]["المواد"]
+    
+    # التحقق من المتطلبات واقتراح المواد وحساب الساعات
+    suggested = []
+    total_hours = 0
+    for course in plan:
+        c_name = course["name"]
+        c_hours = course["hours"]
+        c_prereq = course["prereq"]
+        
+        if c_name not in passed:
+            # التحقق إذا اجتاز المتطلب السابق
+            if all(p in passed for p in c_prereq):
+                suggested.append(c_name)
+                total_hours += c_hours
+
+    report = (
+        f"📊 **تقرير الخطة الدراسية الذكي ({major}):**\n\n"
+        f"✅ المواد المجتازة: {len(passed)}\n"
+        f"🚀 المواد المقترحة للترم القادم: {', '.join(suggested) if suggested else 'لا توجد مواد مقترحة حالياً'}\n"
+        f"⏱️ إجمالي ساعات المواد المقترحة: {total_hours} ساعات\n\n"
+        "💡 تم التحقق من المتطلبات السابقة تلقائياً بنجاح!"
+    )
+    
+    await update.message.reply_text(report, parse_mode="Markdown")
+    return ConversationHandler.END
+
+# ----------------- معالجة الأزرار العامة -----------------
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_name = update.effective_user.first_name
@@ -215,86 +266,6 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
     if update.message:
         await update.message.reply_text(welcome_text, reply_markup=main_menu_keyboard())
-
-# ----------------- محادثة الخطة الدراسية الذكية -----------------
-
-async def study_plan_start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    query = update.callback_query
-    await query.answer()
-    courses = load_courses()
-    codes_list = "، ".join(c["code"] for c in courses)
-    await query.edit_message_text(
-        "🧠 الخطة الدراسية الذكية\n\n"
-        "أرسل رموز المواد اللي خلصتها مفصولة بفواصل، مثال:\n"
-        "CS101, MATH101\n\n"
-        "أو اكتب «لا شيء» إذا ما خلصت أي مادة بعد.\n\n"
-        f"رموز المواد المتاحة بالخطة:\n{codes_list}"
-    )
-    return STUDY_ASK_COMPLETED
-
-
-async def study_receive_completed(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    text = update.message.text.strip()
-
-    if text in ("لا شيء", "لاشيء", "لا", "-"):
-        completed = []
-    else:
-        completed = [code.strip().upper() for code in text.split(",") if code.strip()]
-
-    valid_codes = {c["code"] for c in load_courses()}
-    unknown = [c for c in completed if c not in valid_codes]
-    if unknown:
-        await update.message.reply_text(
-            "⚠️ ما لقيت هالرموز بالخطة: " + "، ".join(unknown) +
-            "\nتأكد من الرموز وحاول مرة ثانية، أو اكتب «لا شيء»."
-        )
-        return STUDY_ASK_COMPLETED
-
-    context.user_data["study_completed"] = completed
-    await update.message.reply_text("تمام ✅ وش الترم اللي بتسجل له؟", reply_markup=study_term_keyboard())
-    return STUDY_ASK_TERM
-
-
-async def study_receive_term(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    query = update.callback_query
-    await query.answer()
-    term = query.data.replace("study_term_", "")
-
-    completed = context.user_data.get("study_completed", [])
-    result = suggest_plan(completed, term)
-    critical_left = remaining_critical_courses(completed)
-
-    lines = [f"📚 اقتراح خطة تسجيل ({term}):\n"]
-
-    if result["selected"]:
-        for c in result["selected"]:
-            tag = " 🔴 حرجة" if c["critical"] else ""
-            lines.append(f"• {c['code']} - {c['name']} ({c['hours']} ساعات){tag}")
-        lines.append(f"\nإجمالي الساعات المقترحة: {result['total_hours']}")
-    else:
-        lines.append("ما فيه مواد متاحة لك هذا الترم حسب البيانات الحالية.")
-
-    if result["skipped_due_to_conflict_or_hours"]:
-        lines.append("\n⏱️ مواد ثانية كانت متاحة بس استُبعدت (تعارض وقت أو تجاوز سقف الساعات):")
-        for c in result["skipped_due_to_conflict_or_hours"]:
-            lines.append(f"• {c['code']} - {c['name']}")
-
-    remaining_not_selected = [c for c in critical_left if c not in result["selected"]]
-    if remaining_not_selected:
-        lines.append("\n🚨 مواد حرجة لسا ما أخذتها (تأخير هالمواد ممكن يأخر تخرجك):")
-        for c in remaining_not_selected:
-            lines.append(f"• {c['code']} - {c['name']}")
-
-    await query.edit_message_text("\n".join(lines), reply_markup=back_to_main_keyboard())
-    return ConversationHandler.END
-
-
-async def study_cancel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    query = update.callback_query
-    await query.answer()
-    await query.edit_message_text("القائمة الرئيسية:", reply_markup=main_menu_keyboard())
-    return ConversationHandler.END
-
 
 async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
@@ -491,20 +462,23 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 def main():
     TOKEN = "8722924986:AAEVU_oqQDYFs6LG18D-A0VJJfr9Ry2Jyr0"
     app = ApplicationBuilder().token(TOKEN).build()
-
-    study_plan_conv = ConversationHandler(
-        entry_points=[CallbackQueryHandler(study_plan_start, pattern="^study_plan_menu$")],
+    
+    # ربط معالجات المحادثة للخطة الذكية
+    conv_handler = ConversationHandler(
+        entry_points=[CallbackQueryHandler(study_plan_start, pattern='study_plan_start')],
         states={
-            STUDY_ASK_COMPLETED: [MessageHandler(filters.TEXT & ~filters.COMMAND, study_receive_completed)],
-            STUDY_ASK_TERM: [CallbackQueryHandler(study_receive_term, pattern="^study_term_")],
+            CHOOSING_MAJOR: [MessageHandler(filters.TEXT & ~filters.COMMAND, get_major)],
+            ENTERING_PASSED_COURSES: [MessageHandler(filters.TEXT & ~filters.COMMAND, get_passed_courses)],
         },
-        fallbacks=[CallbackQueryHandler(study_cancel, pattern="^main_menu$")],
+        fallbacks=[],
     )
-
+    
     app.add_handler(CommandHandler("start", start))
-    app.add_handler(study_plan_conv)
+    app.add_handler(conv_handler)
     app.add_handler(CallbackQueryHandler(button_handler))
-    print("🤖 البوت يعمل بكامل التحديثات الأخيرة...")
+    
+    print("🤖 البوت يعمل بكامل التحديثات (دليل الجامعة + الخطة الدراسية الذكية)...")
     app.run_polling()
 
 if __name__ == "__main__":
+    main()
