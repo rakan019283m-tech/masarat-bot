@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 بوت مسارات الثلاث (صحي / هندسي / حاسوبي)
-نسخة نهائية معدلة لحل مشكلة أزرار رنا ومصطفى وتفاصيلهم
+نسخة نهائية مع تحديث رسالة البداية وإضافة الملاحظة
 """
 
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
@@ -178,6 +178,12 @@ DATA = {
     },
 }
 
+WELCOME_MESSAGE = (
+    "أهلاً بك 👋\n"
+    "اختر مسارك عشان تشوف مدرسينه:\n\n"
+    "ملاحظة: الخصوصيين المعلّم عليهم بـ ✅ قد تم التواصل معهم والتحقق من بياناتهم واعتمادهم."
+)
+
 
 # ============ دالة مساعدة للبحث عن المدرس بواسطة الـ id الخاص به ============
 def find_tutor_by_id(tutor_id):
@@ -198,7 +204,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         [InlineKeyboardButton(DATA["hasoobi"]["title"], callback_data="path_hasoobi")],
     ]
     await update.message.reply_text(
-        "أهلاً بك 👋\nاختر مسارك عشان تشوف مدرسينه:",
+        WELCOME_MESSAGE,
         reply_markup=InlineKeyboardMarkup(keyboard)
     )
 
@@ -215,7 +221,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             [InlineKeyboardButton(DATA["hasoobi"]["title"], callback_data="path_hasoobi")],
         ]
         await query.message.edit_text(
-            "أهلاً بك 👋\nاختر مسارك عشان تشوف مدرسينه:",
+            WELCOME_MESSAGE,
             reply_markup=InlineKeyboardMarkup(keyboard)
         )
 
