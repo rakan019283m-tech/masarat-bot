@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 بوت مسارات الثلاث (صحي / هندسي / حاسوبي)
-نسخة نهائية مصححة (تم حل مشكلة طول الـ callback_data لجميع الأزرار)
+نسخة تصحيح جذرية للتعامل مع الأحداث واستجابة الأزرار
 """
 
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
@@ -10,7 +10,7 @@ from telegram.ext import Application, CommandHandler, CallbackQueryHandler, Cont
 # ============ التوكن ============
 TOKEN = "8880859850:AAF8h52qAVKv-tFL5EeeT-SR5bVFcEvm0TM"
 
-# ============ قاعدة بيانات المدرسين مع معرفات قصيرة جداً لتجنب قيود تليجرام ============
+# ============ قاعدة بيانات المدرسين ============
 DATA = {
     "sehi": {
         "title": "🩺 المسار الصحي",
@@ -20,7 +20,7 @@ DATA = {
                 "tutors": [
                     {"id": "s_comp_1", "name": "محمد الجنيدي", "contact": "https://t.me/njph80ysical", "phone": "غير متوفر", "price": "300 ريال"},
                     {"id": "s_comp_2", "name": "مسعد احمد", "contact": "https://t.me/computersciencewithmosaad", "phone": "غير متوفر", "price": "300 ريال"},
-                    {"id": "s_comp_3", "name": "رنا العريقي ✅", "contact": "حاسب: https://t.me/RanaprogrammingNU\nبرمجة: https://t.me/+fMaCNdKHOlo1OTE0", "phone": "@Ra12na_IT", "price": "حاسب 250 ﷼ / برمجة 350 ﷼"},
+                    {"id": "s_comp_3", "name": "رنا العريقي ✅", "contact": "حاسب: https://t.me/RanaprogrammingNU - برمجة: https://t.me/+fMaCNdKHOlo1OTE0", "phone": "@Ra12na_IT", "price": "حاسب 250 ﷼ / برمجة 350 ﷼"},
                     {"id": "s_comp_4", "name": "رهيب محمد ✅", "contact": "https://t.me/+RlxTlc5FvJ5hZGQ0", "phone": "@Diamond246", "price": "حاسب 199 ﷼ / برمجة 299 ﷼"},
                 ]
             },
@@ -105,7 +105,7 @@ DATA = {
                 "tutors": [
                     {"id": "h_pr_1", "name": "أدهم وليد ✅", "contact": "https://t.me/+fsBhyLBmkCs3MTFk", "phone": "0543646583", "price": "300 ﷼ (عن بعد)"},
                     {"id": "h_pr_2", "name": "رهيب محمد ✅", "contact": "https://t.me/+RlxTlc5FvJ5hZGQ0", "phone": "@Diamond246", "price": "حاسب 199 ﷼ / برمجة 299 ﷼"},
-                    {"id": "h_pr_3", "name": "رنا العريقي ✅", "contact": "حاسب: https://t.me/RanaprogrammingNU\nبرمجة: https://t.me/+fMaCNdKHOlo1OTE0", "phone": "@Ra12na_IT", "price": "حاسب 250 ﷼ / برمجة 350 ﷼"},
+                    {"id": "h_pr_3", "name": "رنا العريقي ✅", "contact": "حاسب: https://t.me/RanaprogrammingNU - برمجة: https://t.me/+fMaCNdKHOlo1OTE0", "phone": "@Ra12na_IT", "price": "حاسب 250 ﷼ / برمجة 350 ﷼"},
                     {"id": "h_pr_4", "name": "محمد الجنيدي", "contact": "https://t.me/njph80ysical", "phone": "غير متوفر", "price": "300 ريال"},
                     {"id": "h_pr_5", "name": "مسعد احمد", "contact": "https://t.me/computersciencewithmosaad", "phone": "غير متوفر", "price": "300 ريال"},
                 ]
@@ -132,7 +132,7 @@ DATA = {
                 "tutors": [
                     {"id": "c_pr_1", "name": "أدهم وليد ✅", "contact": "https://t.me/+fsBhyLBmkCs3MTFk", "phone": "0543646583", "price": "300 ﷼ (عن بعد)"},
                     {"id": "c_pr_2", "name": "رهيب محمد ✅", "contact": "https://t.me/+RlxTlc5FvJ5hZGQ0", "phone": "@Diamond246", "price": "حاسب 199 ﷼ / برمجة 299 ﷼"},
-                    {"id": "c_pr_3", "name": "رنا العريقي ✅", "contact": "حاسب: https://t.me/RanaprogrammingNU\nبرمجة: https://t.me/+fMaCNdKHOlo1OTE0", "phone": "@Ra12na_IT", "price": "حاسب 250 ﷼ / برمجة 350 ﷼"},
+                    {"id": "c_pr_3", "name": "رنا العريقي ✅", "contact": "حاسب: https://t.me/RanaprogrammingNU - برمجة: https://t.me/+fMaCNdKHOlo1OTE0", "phone": "@Ra12na_IT", "price": "حاسب 250 ﷼ / برمجة 350 ﷼"},
                     {"id": "c_pr_4", "name": "محمد الجنيدي", "contact": "https://t.me/njph80ysical", "phone": "غير متوفر", "price": "300 ريال"},
                     {"id": "c_pr_5", "name": "مسعد احمد", "contact": "https://t.me/computersciencewithmosaad", "phone": "غير متوفر", "price": "300 ريال"},
                 ]
@@ -184,8 +184,7 @@ WELCOME_MESSAGE = (
     "ملاحظة: الخصوصيين المعلّم عليهم بـ ✅ قد تم التواصل معهم والتحقق من بياناتهم واعتمادهم."
 )
 
-
-# ============ دالة البحث عن المدرس بواسطة الـ id ============
+# ============ دالة البحث عن المدرس ============
 def find_tutor_by_id(tutor_id):
     for path_key, path_data in DATA.items():
         for subj_key, subj_data in path_data["subjects"].items():
@@ -193,7 +192,6 @@ def find_tutor_by_id(tutor_id):
                 if tutor["id"] == tutor_id:
                     return tutor, path_key, subj_key
     return None, None, None
-
 
 # ============ الأوامر والأحداث ============
 
@@ -207,7 +205,6 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         WELCOME_MESSAGE,
         reply_markup=InlineKeyboardMarkup(keyboard)
     )
-
 
 async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
@@ -249,6 +246,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         keyboard = []
         for tutor in tutors:
+            # استخدام معرف المدرس المباشر في الـ callback_data بدون تعقيد
             keyboard.append([InlineKeyboardButton(tutor["name"], callback_data=f"tutor_{tutor['id']}")])
         
         keyboard.append([InlineKeyboardButton("🔙 رجوع للمواد", callback_data=f"path_{path_key}")])
@@ -266,17 +264,17 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await query.message.edit_text("عذراً، لم يتم العثور على بيانات المدرس.")
             return
 
+        # إزالة الـ parse_mode لتجنب أي تعارض في رموز الروابط وتنسيق النص
         text = (
-            f"👤 **{tutor['name']}**\n"
-            f"🔗 **رابط القناة:**\n{tutor['contact']}\n"
-            f"📞 **الهاتف / التواصل:** {tutor['phone']}\n"
-            f"💰 **السعر:** {tutor['price']}"
+            f"👤 {tutor['name']}\n\n"
+            f"🔗 رابط القناة:\n{tutor['contact']}\n\n"
+            f"📞 الهاتف / التواصل: {tutor['phone']}\n"
+            f"💰 السعر: {tutor['price']}"
         )
         
         keyboard = [[InlineKeyboardButton("🔙 رجوع للمدرسين", callback_data=f"subj_{path_key}_{subj_key}")]]
         
-        await query.message.edit_text(text, parse_mode="Markdown", reply_markup=InlineKeyboardMarkup(keyboard))
-
+        await query.message.edit_text(text, reply_markup=InlineKeyboardMarkup(keyboard))
 
 def main():
     app = Application.builder().token(TOKEN).build()
@@ -284,7 +282,6 @@ def main():
     app.add_handler(CallbackQueryHandler(button_handler))
     print("البوت شغال...")
     app.run_polling()
-
 
 if __name__ == "__main__":
     main()
