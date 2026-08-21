@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 بوت مسارات الثلاث (صحي / هندسي / حاسوبي)
-مع الروابط، الأسماء، والأرقام والأسعار كاملة (محدث ومُحسّن)
+نسخة معدلة ومستقرة تماماً لمعالجة أزرار الأسماء
 """
 
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
@@ -183,9 +183,9 @@ DATA = {
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     keyboard = [
-        [InlineKeyboardButton(DATA["sehi"]["title"], callback_data="path|sehi")],
-        [InlineKeyboardButton(DATA["handasi"]["title"], callback_data="path|handasi")],
-        [InlineKeyboardButton(DATA["hasoobi"]["title"], callback_data="path|hasoobi")],
+        [InlineKeyboardButton(DATA["sehi"]["title"], callback_data="path_sehi")],
+        [InlineKeyboardButton(DATA["handasi"]["title"], callback_data="path_handasi")],
+        [InlineKeyboardButton(DATA["hasoobi"]["title"], callback_data="path_hasoobi")],
     ]
     await update.message.reply_text(
         "أهلاً بك 👋\nاختر مسارك عشان تشوف مدرسينه:",
@@ -198,28 +198,25 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await query.answer()
     data = query.data
 
-    parts = data.split("|")
-    action = parts[0]
-
-    if action == "main_menu":
+    if data == "main_menu":
         keyboard = [
-            [InlineKeyboardButton(DATA["sehi"]["title"], callback_data="path|sehi")],
-            [InlineKeyboardButton(DATA["handasi"]["title"], callback_data="path|handasi")],
-            [InlineKeyboardButton(DATA["hasoobi"]["title"], callback_data="path|hasoobi")],
+            [InlineKeyboardButton(DATA["sehi"]["title"], callback_data="path_sehi")],
+            [InlineKeyboardButton(DATA["handasi"]["title"], callback_data="path_handasi")],
+            [InlineKeyboardButton(DATA["hasoobi"]["title"], callback_data="path_hasoobi")],
         ]
         await query.message.edit_text(
             "أهلاً بك 👋\nاختر مسارك عشان تشوف مدرسينه:",
             reply_markup=InlineKeyboardMarkup(keyboard)
         )
 
-    elif action == "path":
-        path_key = parts[1]
+    elif data.startswith("path_"):
+        path_key = data.split("_")[1]
         path = DATA[path_key]
         subjects = path["subjects"]
 
         keyboard = []
         for subj_key, subj in subjects.items():
-            keyboard.append([InlineKeyboardButton(subj["title"], callback_data=f"subj|{path_key}|{subj_key}")])
+            keyboard.append([InlineKeyboardButton(subj["title"], callback_data=f"subj_{path_key}_{subj_key}")])
         
         keyboard.append([InlineKeyboardButton("🔙 رجوع للمسارات", callback_data="main_menu")])
 
@@ -228,25 +225,30 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             reply_markup=InlineKeyboardMarkup(keyboard)
         )
 
-    elif action == "subj":
+    elif data.startswith("subj_"):
+        parts = data.split("_")
         path_key, subj_key = parts[1], parts[2]
         subject = DATA[path_key]["subjects"][subj_key]
         tutors = subject["tutors"]
 
         keyboard = []
         for i, tutor in enumerate(tutors):
-            # استخدام الفهارس القصيرة لتجنب مشكلة حد الـ 64 بايت
-            keyboard.append([InlineKeyboardButton(tutor["name"], callback_data=f"tutor|{path_key}|{subj_key}|{i}")])
+            # استخدام شرطة سفلية آمنة وبدلاً من الحانات المتعددة لتفادي أخطاء التقسيم
+            keyboard.append([InlineKeyboardButton(tutor["name"], callback_data=f"tutor_{path_key}_{subj_key}_{i}")])
         
-        keyboard.append([InlineKeyboardButton("🔙 رجوع للمواد", callback_data=f"path|{path_key}")])
+        keyboard.append([InlineKeyboardButton("🔙 رجوع للمواد", callback_data=f"path_{path_key}")])
 
         await query.message.edit_text(
             f"{subject['title']}\n\nاختر المدرس:",
             reply_markup=InlineKeyboardMarkup(keyboard)
         )
 
-    elif action == "tutor":
-        path_key, subj_key, idx = parts[1], parts[2], int(parts[3])
+    elif data.startswith("tutor_"):
+        parts = data.split("_")
+        path_key = parts[1]
+        subj_key = parts[2]
+        idx = int(parts[3])
+        
         tutor = DATA[path_key]["subjects"][subj_key]["tutors"][idx]
 
         text = (
@@ -256,7 +258,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             f"💰 **السعر:** {tutor['price']}"
         )
         
-        keyboard = [[InlineKeyboardButton("🔙 رجوع للمدرسين", callback_data=f"subj|{path_key}|{subj_key}")]]
+        keyboard = [[InlineKeyboardButton("🔙 رجوع للمدرسين", callback_data=f"subj_{path_key}_{subj_key}")]]
         
         await query.message.edit_text(text, parse_mode="Markdown", reply_markup=InlineKeyboardMarkup(keyboard))
 
