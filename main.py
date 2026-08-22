@@ -16,6 +16,7 @@ def main_menu_keyboard():
          InlineKeyboardButton("📅 التقويم الجامعي", url="https://t.me/Najran1_NU/1553668")],
         [InlineKeyboardButton("📊 نسب القبول", url="https://t.me/Najran1_NU/1555365"),
          InlineKeyboardButton("📋 شروط القبول", callback_data="admission_guide")],
+        [InlineKeyboardButton("📋 خطط التخصصات", callback_data="study_plans_menu")],
         [InlineKeyboardButton("⭐ مراتب الشرف", url="https://t.me/Najran1_NU/1553663"),
          InlineKeyboardButton("🗺️ أرقام المباني", url="https://t.me/Najran1_NU/1553674")],
         [InlineKeyboardButton("📞 أرقام التواصل والمسؤولين", url="https://t.me/Najran1_NU/1553665"),
@@ -126,6 +127,110 @@ def admsci_keyboard():
     ]
     return InlineKeyboardMarkup(keyboard)
 
+# ----------------- قوائم خطط التخصصات -----------------
+
+def study_plans_menu_keyboard():
+    keyboard = [
+        [InlineKeyboardButton("⚙️ المسار الهندسي", callback_data="plan_eng"),
+         InlineKeyboardButton("🩺 المسار الصحي", callback_data="plan_health")],
+        [InlineKeyboardButton("💼 إدارة الأعمال", callback_data="plan_biz"),
+         InlineKeyboardButton("📊 الكلية التطبيقية", callback_data="plan_applied")],
+        [InlineKeyboardButton("🗣️ اللغات والترجمة", callback_data="plan_langs"),
+         InlineKeyboardButton("🧪 العلوم والآداب", callback_data="plan_arts")],
+        [InlineKeyboardButton("💻 علوم الحاسب ونظم المعلومات", callback_data="plan_cs")],
+        [InlineKeyboardButton("🛤️ المسارات التحضيرية", callback_data="plan_paths")],
+        [InlineKeyboardButton("⬅️ القائمة الرئيسية", callback_data="main_menu")]
+    ]
+    return InlineKeyboardMarkup(keyboard)
+
+def plan_eng_keyboard():
+    keyboard = [
+        [InlineKeyboardButton("خطة الهندسة المعمارية", url="https://t.me/NuPlans/8")],
+        [InlineKeyboardButton("خطة الهندسة الميكانيكية", url="https://t.me/NuPlans/9")],
+        [InlineKeyboardButton("خطة الهندسة الكيميائية", url="https://t.me/NuPlans/10")],
+        [InlineKeyboardButton("خطة الهندسة الكهربائية", url="https://t.me/NuPlans/19")],
+        [InlineKeyboardButton("خطة الهندسة المدنية", url="https://t.me/NuPlans/20")],
+        [InlineKeyboardButton("خطة التصميم الداخلي", url="https://t.me/NuPlans/21")],
+        [InlineKeyboardButton("⬅️ رجوع للخطط", callback_data="study_plans_menu")]
+    ]
+    return InlineKeyboardMarkup(keyboard)
+
+def plan_health_keyboard():
+    keyboard = [
+        [InlineKeyboardButton("خطة دكتور صيدلي", url="https://t.me/NuPlans/23")],
+        [InlineKeyboardButton("خطة علوم مختبرات", url="https://t.me/NuPlans/24")],
+        [InlineKeyboardButton("خطة طب الأسنان", url="https://t.me/NuPlans/25")],
+        [InlineKeyboardButton("خطة الطب", url="https://t.me/NuPlans/26")],
+        [InlineKeyboardButton("خطة الأشعة التشخيصية", url="https://t.me/NuPlans/27")],
+        [InlineKeyboardButton("خطة التمريض", url="https://t.me/NuPlans/28")],
+        [InlineKeyboardButton("خطة العلاج الطبيعي", url="https://t.me/NuPlans/29")],
+        [InlineKeyboardButton("⬅️ رجوع للخطط", callback_data="study_plans_menu")]
+    ]
+    return InlineKeyboardMarkup(keyboard)
+
+def plan_biz_keyboard():
+    keyboard = [
+        [InlineKeyboardButton("التسويق والتجارة الالكترونية", url="https://t.me/NuPlans/31")],
+        [InlineKeyboardButton("ادارة الموارد البشرية", url="https://t.me/NuPlans/32")],
+        [InlineKeyboardButton("الأنظمة (قانون)", url="https://t.me/NuPlans/33")],
+        [InlineKeyboardButton("المحاسبة", url="https://t.me/NuPlans/34")],
+        [InlineKeyboardButton("إدارة اعمال", url="https://t.me/NuPlans/35")],
+        [InlineKeyboardButton("⬅️ رجوع للخطط", callback_data="study_plans_menu")]
+    ]
+    return InlineKeyboardMarkup(keyboard)
+
+def plan_applied_keyboard():
+    keyboard = [
+        [InlineKeyboardButton("محاسبة", url="https://t.me/NuPlans/37")],
+        [InlineKeyboardButton("دعم فني", url="https://t.me/NuPlans/38")],
+        [InlineKeyboardButton("ادارة اعمال", url="https://t.me/NuPlans/39")],
+        [InlineKeyboardButton("البرمجة وقواعد بيانات", url="https://t.me/NuPlans/40")],
+        [InlineKeyboardButton("نظم معلومات", url="https://t.me/NuPlans/41")],
+        [InlineKeyboardButton("إدارة الابتكار وريادة الأعمال", url="https://t.me/NuPlans/42")],
+        [InlineKeyboardButton("التسويق التطبيقي", url="https://t.me/NuPlans/44")],
+        [InlineKeyboardButton("⬅️ رجوع للخطط", callback_data="study_plans_menu")]
+    ]
+    return InlineKeyboardMarkup(keyboard)
+
+def plan_langs_keyboard():
+    keyboard = [
+        [InlineKeyboardButton("الترجمة", url="https://t.me/NuPlans/46")],
+        [InlineKeyboardButton("اللغة الإنجليزية", url="https://t.me/NuPlans/47")],
+        [InlineKeyboardButton("⬅️ رجوع للخطط", callback_data="study_plans_menu")]
+    ]
+    return InlineKeyboardMarkup(keyboard)
+
+def plan_arts_keyboard():
+    keyboard = [
+        [InlineKeyboardButton("فيزياء", url="https://t.me/NuPlans/49")],
+        [InlineKeyboardButton("احياء", url="https://t.me/NuPlans/50")],
+        [InlineKeyboardButton("كيمياء", url="https://t.me/NuPlans/51")],
+        [InlineKeyboardButton("رياضيات", url="https://t.me/NuPlans/52")],
+        [InlineKeyboardButton("رياضيات المالية والاكتوارية", url="https://t.me/NuPlans/53")],
+        [InlineKeyboardButton("الاحصاء التطبيقي", url="https://t.me/NuPlans/54")],
+        [InlineKeyboardButton("اللغه العربيه", url="https://t.me/NuPlans/55")],
+        [InlineKeyboardButton("⬅️ رجوع للخطط", callback_data="study_plans_menu")]
+    ]
+    return InlineKeyboardMarkup(keyboard)
+
+def plan_cs_keyboard():
+    keyboard = [
+        [InlineKeyboardButton("شبكات الحاسب والإتصالات", url="https://t.me/NuPlans/60")],
+        [InlineKeyboardButton("نظم معلومات", url="https://t.me/NuPlans/61")],
+        [InlineKeyboardButton("علوم الحاسب", url="https://t.me/NuPlans/66")],
+        [InlineKeyboardButton("⬅️ رجوع للخطط", callback_data="study_plans_menu")]
+    ]
+    return InlineKeyboardMarkup(keyboard)
+
+def plan_paths_keyboard():
+    keyboard = [
+        [InlineKeyboardButton("المسار الصحي", url="https://t.me/NuPlans/68")],
+        [InlineKeyboardButton("المسار الحاسوبي", url="https://t.me/NuPlans/69")],
+        [InlineKeyboardButton("المسار الهندسي", url="https://t.me/NuPlans/70")],
+        [InlineKeyboardButton("⬅️ رجوع للخطط", callback_data="study_plans_menu")]
+    ]
+    return InlineKeyboardMarkup(keyboard)
+
 # ----------------- القوائم الفرعية -----------------
 
 def housing_menu_keyboard():
@@ -148,7 +253,7 @@ def academic_menu_keyboard():
          InlineKeyboardButton("🚶‍♂️ الطلبة الزائرون", callback_data="visitor")],
         [InlineKeyboardButton("⚖️ الفرق بين التأجيل والاعتذار", callback_data="diff")],
         [InlineKeyboardButton("📚 توصيف المقرر", callback_data="course_desc")],
-        [InlineKeyboardButton("📋 الخطط الدراسية", url="https://edugate.nu.edu.sa/nu/ui/guest/major_plans/index/facultiesMajorsIndex.faces")],
+        [InlineKeyboardButton("📋 خطط التخصصات", callback_data="study_plans_menu")],
         [InlineKeyboardButton("🔄 نظام وتحويل الكليات", url="https://t.me/Najran1_NU/1553671")],
         [InlineKeyboardButton("📊 التقديرات", url="https://t.me/Najran1_NU/1553731"),
          InlineKeyboardButton("⚠️ انقطاع المكافأة", callback_data="reward_stop")],
@@ -194,6 +299,26 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     if data == "main_menu":
         await query.edit_message_text("القائمة الرئيسية:", reply_markup=main_menu_keyboard())
+
+    # خطط التخصصات
+    elif data == "study_plans_menu":
+        await query.edit_message_text("📋 اختر الكلية أو المسار لعرض خطط التخصصات:", reply_markup=study_plans_menu_keyboard())
+    elif data == "plan_eng":
+        await query.edit_message_text("⚙️ خطط تخصصات المسار الهندسي:", reply_markup=plan_eng_keyboard())
+    elif data == "plan_health":
+        await query.edit_message_text("🩺 خطط تخصصات المسار الصحي:", reply_markup=plan_health_keyboard())
+    elif data == "plan_biz":
+        await query.edit_message_text("💼 خطط تخصصات إدارة الأعمال:", reply_markup=plan_biz_keyboard())
+    elif data == "plan_applied":
+        await query.edit_message_text("📊 خطط تخصصات الكلية التطبيقية:", reply_markup=plan_applied_keyboard())
+    elif data == "plan_langs":
+        await query.edit_message_text("🗣️ خطط تخصصات كلية اللغات والترجمة:", reply_markup=plan_langs_keyboard())
+    elif data == "plan_arts":
+        await query.edit_message_text("🧪 خطط تخصصات كلية العلوم والآداب:", reply_markup=plan_arts_keyboard())
+    elif data == "plan_cs":
+        await query.edit_message_text("💻 خطط تخصصات علوم الحاسب ونظم المعلومات:", reply_markup=plan_cs_keyboard())
+    elif data == "plan_paths":
+        await query.edit_message_text("🛤️ خطط تخصصات المسارات التحضيرية:", reply_markup=plan_paths_keyboard())
 
     # الكليات
     elif data == "colleges_menu":
