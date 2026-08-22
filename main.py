@@ -231,7 +231,23 @@ def plan_paths_keyboard():
     ]
     return InlineKeyboardMarkup(keyboard)
 
-# ----------------- القوائم الفرعية -----------------
+# ----------------- قوائم شروط الاستمرار الفرعية -----------------
+
+def gpa_conditions_keyboard():
+    keyboard = [
+        [InlineKeyboardButton("🩺 الطب والجراحة (4.25)", callback_data="cond_medicine"),
+         InlineKeyboardButton("🦷 طب الأسنان (3.75)", callback_data="cond_dentistry")],
+        [InlineKeyboardButton("💊 دكتور صيدلي (3.25)", callback_data="cond_pharmacy"),
+         InlineKeyboardButton("💉 التمريض (3.25)", callback_data="cond_nursing")],
+        [InlineKeyboardButton("🧪 العلوم الطبية التطبيقية (3.00)", callback_data="cond_applied_medical")],
+        [InlineKeyboardButton("💻 علوم الحاسب ونظم المعلومات (3.25)", callback_data="cond_cs")],
+        [InlineKeyboardButton("⚙️ كلية الهندسة (3.00)", callback_data="cond_engineering")],
+        [InlineKeyboardButton("📋 الشروط العامة والأحكام", callback_data="cond_general")],
+        [InlineKeyboardButton("⬅️ القائمة الرئيسية", callback_data="main_menu")]
+    ]
+    return InlineKeyboardMarkup(keyboard)
+
+# ----------------- القوائم الفرعية الأخرى -----------------
 
 def housing_menu_keyboard():
     keyboard = [
@@ -492,24 +508,113 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
         await query.edit_message_text(text, reply_markup=back_to_main_keyboard(), parse_mode="Markdown")
 
-    # شروط الاستمرار بعد السنة المشتركة
+    # شروط الاستمرار (القائمة الرئيسية للزر)
     elif data == "gpa_conditions":
+        text = "📈 **شروط الاستمرار في البرنامج بعد اجتياز السنة المشتركة:**\n\nاختر التخصص لمعرفة المعدل المطلوب والشروط الخاصة به:"
+        await query.edit_message_text(text, reply_markup=gpa_conditions_keyboard(), parse_mode="Markdown")
+
+    # تفاصيل شروط التخصصات الفردية
+    elif data == "cond_medicine":
         text = (
-            "📈 **شروط الإكمال في البرنامج بعد اجتياز السنة المشتركة:**\n\n"
-            "**أولاً:** الحصول على معدل تراكمي يتيح للطالب الاستمرار في البرنامج، وفق التفصيل أدناه:\n"
-            "• الحصول على معدل 4.25 فأعلى للإكمال على تخصص الطب والجراحة.\n"
-            "• الحصول على معدل تراكمي 3.75 فأعلى للإكمال على تخصص طب الأسنان.\n"
-            "• الحصول على معدل 3.25 فأعلى للإكمال على تخصص دكتور صيدلي.\n"
-            "• الحصول على معدل تراكمي 3.25 فأعلى للإكمال على التمريض.\n"
-            "• الحصول على معدل 3 فأعلى للإكمال على تخصصات كلية العلوم الطبية التطبيقية.\n"
-            "• الحصول على معدل 3.25 فأعلى للإكمال على تخصصات كلية علوم الحاسب ونظم المعلومات.\n"
-            "• الحصول على معدل 3 فأعلى للإكمال على تخصصات كلية الهندسة.\n"
-            "(شرط المعدل التراكمي بعد اجتياز المسار)\n\n"
-            "**ثانياً:** يجوز النزول عن المعدلات المشار إليها أعلاه في حال توفر مقاعد شاغرة.\n\n"
-            "**ثالثاً:** إذا لم يحقق الطالب الحد الأدنى لمعدل الاستمرار في البرنامج، فيتاح له التحويل إلى أحد البرامج ضمن المسار ذاته، شريطة استيفاء شرط المعدل المحدد لذلك البرنامج، وتوفر مقاعد شاغرة فيه.\n\n"
-            "**رابعاً:** في حال عدم توفر مقاعد شاغرة في أيّ من برامج المسار، يُحوّل الطالب إلى أحد برامج البكالوريوس التي لا تتطلب السنة المشتركة، أو إلى أحد برامج الدبلوم، وذلك وفقاً للمقاعد المتاحة."
+            "🩺 **تخصص الطب والجراحة:**\n\n"
+            "• **المعدل المطلوب:** الحصول على معدل **4.25 فأعلى** للإكمال في التخصص.\n\n"
+            "📜 **شروط عامة:**\n"
+            "1️⃣ يجوز النزول عن المعدلات المشار إليها في حال توفر مقاعد شاغرة.\n"
+            "2️⃣ إذا لم يحقق الطالب الحد الأدنى للاستمرار، فيتاح له التحويل إلى أحد البرامج ضمن المسار ذاته (شرط توفر مقاعد ومعدل مناسب).\n"
+            "3️⃣ في حال عدم توفر مقاعد شاغرة في المسار، يُحوّل إلى برامج البكالوريوس التي لا تتطلب السنة المشتركة أو الدبلوم."
         )
-        await query.edit_message_text(text, reply_markup=back_to_main_keyboard(), parse_mode="Markdown")
+        keyboard = [[InlineKeyboardButton("⬅️ رجوع لقائمة الشروط", callback_data="gpa_conditions")],
+                    [InlineKeyboardButton("⬅️ القائمة الرئيسية", callback_data="main_menu")]]
+        await query.edit_message_text(text, reply_markup=InlineKeyboardMarkup(keyboard), parse_mode="Markdown")
+
+    elif data == "cond_dentistry":
+        text = (
+            "🦷 **تخصص طب الأسنان:**\n\n"
+            "• **المعدل المطلوب:** الحصول على معدل تراكمي **3.75 فأعلى** للإكمال في التخصص.\n\n"
+            "📜 **شروط عامة:**\n"
+            "1️⃣ يجوز النزول عن المعدلات المشار إليها في حال توفر مقاعد شاغرة.\n"
+            "2️⃣ إذا لم يحقق الطالب الحد الأدنى للاستمرار، فيتاح له التحويل إلى أحد البرامج ضمن المسار ذاته.\n"
+            "3️⃣ عند عدم توفر مقاعد شاغرة بالمسار، يُحوّل لبرامج البكالوريوس الأخرى أو الدبلوم."
+        )
+        keyboard = [[InlineKeyboardButton("⬅️ رجوع لقائمة الشروط", callback_data="gpa_conditions")],
+                    [InlineKeyboardButton("⬅️ القائمة الرئيسية", callback_data="main_menu")]]
+        await query.edit_message_text(text, reply_markup=InlineKeyboardMarkup(keyboard), parse_mode="Markdown")
+
+    elif data == "cond_pharmacy":
+        text = (
+            "💊 **تخصص دكتور صيدلي:**\n\n"
+            "• **المعدل المطلوب:** الحصول على معدل **3.25 فأعلى** للإكمال في التخصص.\n\n"
+            "📜 **شروط عامة:**\n"
+            "1️⃣ يجوز النزول عن المعدلات المشار إليها في حال توفر مقاعد شاغرة.\n"
+            "2️⃣ التحويل متاح لبرامج المسار ذاته عند عدم تحقيق الحد الأدنى بشرط توفر المقاعد.\n"
+            "3️⃣ التحويل لبكالوريوس لا يتطلب السنة المشتركة أو الدبلوم عند إغلاق مقاعد المسار."
+        )
+        keyboard = [[InlineKeyboardButton("⬅️ رجوع لقائمة الشروط", callback_data="gpa_conditions")],
+                    [InlineKeyboardButton("⬅️ القائمة الرئيسية", callback_data="main_menu")]]
+        await query.edit_message_text(text, reply_markup=InlineKeyboardMarkup(keyboard), parse_mode="Markdown")
+
+    elif data == "cond_nursing":
+        text = (
+            "💉 **تخصص التمريض:**\n\n"
+            "• **المعدل المطلوب:** الحصول على معدل تراكمي **3.25 فأعلى** للإكمال في التخصص.\n\n"
+            "📜 **شروط عامة:**\n"
+            "1️⃣ يجوز النزول عن المعدلات المشار إليها في حال توفر مقاعد شاغرة.\n"
+            "2️⃣ إمكانية التحويل لبرامج المسار عند عدم استيفاء المعدل وشريطة توفر المقاعد.\n"
+            "3️⃣ التحويل للبرامج التي لا تتطلب سنة مشتركة أو الدبلوم عند عدم توفر مقاعد."
+        )
+        keyboard = [[InlineKeyboardButton("⬅️ رجوع لقائمة الشروط", callback_data="gpa_conditions")],
+                    [InlineKeyboardButton("⬅️ القائمة الرئيسية", callback_data="main_menu")]]
+        await query.edit_message_text(text, reply_markup=InlineKeyboardMarkup(keyboard), parse_mode="Markdown")
+
+    elif data == "cond_applied_medical":
+        text = (
+            "🧪 **تخصصات كلية العلوم الطبية التطبيقية:**\n\n"
+            "• **المعدل المطلوب:** الحصول على معدل **3 فأعلى** للإكمال في التخصصات.\n\n"
+            "📜 **شروط عامة:**\n"
+            "1️⃣ يجوز النزول عن المعدلات المشار إليها في حال توفر مقاعد شاغرة.\n"
+            "2️⃣ التحويل لبرامج المسار ذاته عند عدم تحقيق شرط المعدل وتوفر المقاعد.\n"
+            "3️⃣ التحويل لبرامج البكالوريوس بدون سنة مشتركة أو الدبلوم عند امتلاء المقاعد."
+        )
+        keyboard = [[InlineKeyboardButton("⬅️ رجوع لقائمة الشروط", callback_data="gpa_conditions")],
+                    [InlineKeyboardButton("⬅️ القائمة الرئيسية", callback_data="main_menu")]]
+        await query.edit_message_text(text, reply_markup=InlineKeyboardMarkup(keyboard), parse_mode="Markdown")
+
+    elif data == "cond_cs":
+        text = (
+            "💻 **تخصصات كلية علوم الحاسب ونظم المعلومات:**\n\n"
+            "• **المعدل المطلوب:** الحصول على معدل **3.25 فأعلى** للإكمال في التخصصات.\n\n"
+            "📜 **شروط عامة:**\n"
+            "1️⃣ يجوز النزول عن المعدلات المشار إليها في حال توفر مقاعد شاغرة.\n"
+            "2️⃣ التحويل لبرامج المسار عند عدم تحقيق الحد الأدنى للمعدل.\n"
+            "3️⃣ التحويل لبرامج البكالوريوس الأخرى غير المطلوبة للسنة المشتركة أو الدبلوم."
+        )
+        keyboard = [[InlineKeyboardButton("⬅️ رجوع لقائمة الشروط", callback_data="gpa_conditions")],
+                    [InlineKeyboardButton("⬅️ القائمة الرئيسية", callback_data="main_menu")]]
+        await query.edit_message_text(text, reply_markup=InlineKeyboardMarkup(keyboard), parse_mode="Markdown")
+
+    elif data == "cond_engineering":
+        text = (
+            "⚙️ **تخصصات كلية الهندسة:**\n\n"
+            "• **المعدل المطلوب:** الحصول على معدل **3 فأعلى** للإكمال في التخصصات.\n\n"
+            "📜 **شروط عامة:**\n"
+            "1️⃣ يجوز النزول عن المعدلات المشار إليها في حال توفر مقاعد شاغرة.\n"
+            "2️⃣ التحويل لبرامج المسار ذاته شريطة استيفاء المعدل والمقاعد الشاغرة.\n"
+            "3️⃣ التحويل لأحد برامج البكالوريوس التي لا تتطلب السنة المشتركة أو الدبلوم عند عدم توفر مقاعد."
+        )
+        keyboard = [[InlineKeyboardButton("⬅️ رجوع لقائمة الشروط", callback_data="gpa_conditions")],
+                    [InlineKeyboardButton("⬅️ القائمة الرئيسية", callback_data="main_menu")]]
+        await query.edit_message_text(text, reply_markup=InlineKeyboardMarkup(keyboard), parse_mode="Markdown")
+
+    elif data == "cond_general":
+        text = (
+            "📋 **الأحكام العامة لشروط الاستمرار:**\n\n"
+            "• **ثانياً:** يجوز النزول عن المعدلات المشار إليها أعلاه في حال توفر مقاعد شاغرة.\n\n"
+            "• **ثالثاً:** إذا لم يحقق الطالب الحد الأدنى لمعدل الاستمرار في البرنامج، فيتاح له التحويل إلى أحد البرامج ضمن المسار ذاته، شريطة استيفاء شرط المعدل المحدد لذلك البرنامج، وتوفر مقاعد شاغرة فيه.\n\n"
+            "• **رابعاً:** في حال عدم توفر مقاعد شاغرة في أيّ من برامج المسار، يُحوّل الطالب إلى أحد برامج البكالوريوس التي لا تتطلب السنة المشتركة، أو إلى أحد برامج الدبلوم، وذلك وفقاً للمقاعد المتاحة."
+        )
+        keyboard = [[InlineKeyboardButton("⬅️ رجوع لقائمة الشروط", callback_data="gpa_conditions")],
+                    [InlineKeyboardButton("⬅️ القائمة الرئيسية", callback_data="main_menu")]]
+        await query.edit_message_text(text, reply_markup=InlineKeyboardMarkup(keyboard), parse_mode="Markdown")
 
 def main():
     TOKEN = "8722924986:AAEVU_oqQDYFs6LG18D-A0VJJfr9Ry2Jyr0"
